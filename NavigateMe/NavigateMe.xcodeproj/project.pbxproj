@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */; };
+		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
+		D351136820136D2D00D9DCC9 /* JSONDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */; };
+		D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136920136F1800D9DCC9 /* S2TGebPlan .swift */; };
+		D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136B20136F3300D9DCC9 /* S2TGebPlanService.swift */; };
 		D35D247B2012D54F0008817F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35D247A2012D54F0008817F /* AppDelegate.swift */; };
 		D35D247D2012D54F0008817F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35D247C2012D54F0008817F /* ViewController.swift */; };
 		D35D24802012D54F0008817F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35D247E2012D54F0008817F /* Main.storyboard */; };
@@ -15,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumCollectionViewCell.swift; sourceTree = "<group>"; };
+		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
+		D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataDelegate.swift; sourceTree = "<group>"; };
+		D351136920136F1800D9DCC9 /* S2TGebPlan .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "S2TGebPlan .swift"; sourceTree = "<group>"; };
+		D351136B20136F3300D9DCC9 /* S2TGebPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S2TGebPlanService.swift; sourceTree = "<group>"; };
 		D35D24772012D54F0008817F /* NavigateMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigateMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D35D247A2012D54F0008817F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D35D247C2012D54F0008817F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +45,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D351136420136B8A00D9DCC9 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D351136520136D1200D9DCC9 /* RESTService.swift */,
+				D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */,
+				D351136B20136F3300D9DCC9 /* S2TGebPlanService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		D35D246E2012D54E0008817F = {
 			isa = PBXGroup;
 			children = (
@@ -54,14 +74,49 @@
 		D35D24792012D54F0008817F /* NavigateMe */ = {
 			isa = PBXGroup;
 			children = (
-				D35D247A2012D54F0008817F /* AppDelegate.swift */,
-				D35D247C2012D54F0008817F /* ViewController.swift */,
-				D35D247E2012D54F0008817F /* Main.storyboard */,
-				D35D24812012D54F0008817F /* Assets.xcassets */,
-				D35D24832012D54F0008817F /* LaunchScreen.storyboard */,
+				D35D248F2012DABE0008817F /* Model */,
+				D35D248C2012D9230008817F /* Supporting Files */,
+				D35D248D2012D9E20008817F /* Controller */,
+				D35D248E2012DAA00008817F /* View */,
 				D35D24862012D54F0008817F /* Info.plist */,
 			);
 			path = NavigateMe;
+			sourceTree = "<group>";
+		};
+		D35D248C2012D9230008817F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D35D247A2012D54F0008817F /* AppDelegate.swift */,
+				D35D24812012D54F0008817F /* Assets.xcassets */,
+				D35D24832012D54F0008817F /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D35D248D2012D9E20008817F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D35D247C2012D54F0008817F /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D35D248E2012DAA00008817F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D35D247E2012D54F0008817F /* Main.storyboard */,
+				D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D35D248F2012DABE0008817F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D351136420136B8A00D9DCC9 /* Service */,
+				D351136920136F1800D9DCC9 /* S2TGebPlan .swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,8 +191,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D351136820136D2D00D9DCC9 /* JSONDataDelegate.swift in Sources */,
 				D35D247D2012D54F0008817F /* ViewController.swift in Sources */,
+				D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */,
+				D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */,
+				D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */,
 				D35D247B2012D54F0008817F /* AppDelegate.swift in Sources */,
+				D351136620136D1200D9DCC9 /* RESTService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
