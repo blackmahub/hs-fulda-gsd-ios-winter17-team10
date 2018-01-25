@@ -14,7 +14,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let s2TGebPlan = S2TGebPlanService()
     let locationManager = CLLocationManager()
+    
     var s2TGebPlans = [S2TGebPlan]()
+    var isRegionDefined = false
 
     @IBOutlet weak var gebPlanCollectionView: UICollectionView!
     @IBOutlet weak var campusMap: MKMapView!
@@ -31,7 +33,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+//        locationManager.distanceFilter = CLLocationDistance(1)
+        locationManager.activityType = CLActivityType.otherNavigation
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = true
         locationManager.startUpdatingLocation()
     }
 
@@ -78,9 +85,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print("Current Location Latitude: \(currentLocation.coordinate.latitude.description)")
         print("Current Location Longitude: \(currentLocation.coordinate.longitude.description)")
         
-        let locationDistance = CLLocationDistance(1000)
-        let currentRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, locationDistance, locationDistance)
-        campusMap.setRegion(currentRegion, animated: true)
+        if !isRegionDefined {
+            
+            let locationDistance = CLLocationDistance(1000)
+            let currentRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, locationDistance, locationDistance)
+            campusMap.setRegion(currentRegion, animated: true)
+            
+            isRegionDefined = true
+        }
+        
+        campusMap.showsUserLocation = true
+        campusMap.showsCompass = true
+        campusMap.showsScale = true
+        campusMap.showsTraffic = true
+        campusMap.showsBuildings = true
+        campusMap.showsPointsOfInterest = true
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
