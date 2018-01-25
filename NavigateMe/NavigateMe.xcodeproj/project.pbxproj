@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */; };
+		D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D303687B201A52EF00AB16E3 /* MapKit.framework */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
 		D351136820136D2D00D9DCC9 /* JSONDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */; };
 		D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136920136F1800D9DCC9 /* S2TGebPlan .swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumCollectionViewCell.swift; sourceTree = "<group>"; };
+		D303687B201A52EF00AB16E3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
 		D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataDelegate.swift; sourceTree = "<group>"; };
 		D351136920136F1800D9DCC9 /* S2TGebPlan .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "S2TGebPlan .swift"; sourceTree = "<group>"; };
@@ -39,12 +41,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D303687A201A52EF00AB16E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D303687B201A52EF00AB16E3 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D351136420136B8A00D9DCC9 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +71,7 @@
 			children = (
 				D35D24792012D54F0008817F /* NavigateMe */,
 				D35D24782012D54F0008817F /* Products */,
+				D303687A201A52EF00AB16E3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +164,14 @@
 					D35D24762012D54F0008817F = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
