@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, JSONDataDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, JSONDataDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     let s2TGebPlan = S2TGebPlanService()
+    let locationManager = CLLocationManager()
     var s2TGebPlans = [S2TGebPlan]()
 
     @IBOutlet weak var gebPlanCollectionView: UICollectionView!
+    @IBOutlet weak var campusMap: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +26,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         gebPlanCollectionView.dataSource = self
         
         s2TGebPlan.delegate = self
+        
+        campusMap.delegate = self
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.startUpdatingLocation()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -50,6 +61,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.s2TGebPlans = data
             self.gebPlanCollectionView.reloadData()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        guard !locations.isEmpty else {
+            
+            print("Locations Array is empty, no Location is found.")
+            return
+        }
+        
+        let currentLocation = locations.last!
+        
+        print("Current Location: \(currentLocation.description)")
+        print("Current Location Coordinate: \(currentLocation.coordinate)")
+        print("Current Location Latitude: \(currentLocation.coordinate.latitude.description)")
+        print("Current Location Longitude: \(currentLocation.coordinate.longitude.description)")
+        
+        let locationDistance = CLLocationDistance(1000)
+        let currentRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, locationDistance, locationDistance)
+        campusMap.setRegion(currentRegion, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        print("Unable to get Current Location Data.")
+        print("Error: \(error.localizedDescription)")
     }
     
     @IBAction func getGebPlanFromS2T(_ sender: UIButton) {
