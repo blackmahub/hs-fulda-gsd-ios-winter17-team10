@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import GoogleMaps
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, JSONDataDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -20,6 +21,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     @IBOutlet weak var gebPlanCollectionView: UICollectionView!
     @IBOutlet weak var campusMap: MKMapView!
+    
+    override func loadView() {
+        
+        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,13 +101,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             isRegionDefined = true
         }
-        
-        campusMap.showsUserLocation = true
-        campusMap.showsCompass = true
-        campusMap.showsScale = true
-        campusMap.showsTraffic = true
-        campusMap.showsBuildings = true
-        campusMap.showsPointsOfInterest = true
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

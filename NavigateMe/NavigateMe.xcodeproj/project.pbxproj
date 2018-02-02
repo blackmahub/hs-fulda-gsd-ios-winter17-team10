@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9313C74C2024C16800FBADA7 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 9313C74B2024C16800FBADA7 /* Podfile */; };
+		9371E0212024D9640042F902 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9371E0202024D9640042F902 /* GoogleMapsBase.framework */; };
+		9371E0242024D9800042F902 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9371E0222024D9800042F902 /* GoogleMaps.framework */; };
+		9371E0252024D9800042F902 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9371E0232024D9800042F902 /* GoogleMapsCore.framework */; };
+		9371E02D2024DB720042F902 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9371E02C2024DB720042F902 /* GoogleMaps.bundle */; };
 		D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */; };
 		D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D303687B201A52EF00AB16E3 /* MapKit.framework */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
@@ -21,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9313C74B2024C16800FBADA7 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		9371E0202024D9640042F902 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = "../../../../../../../../Users/fdai5547/Downloads/5a212b0fa429156f-GoogleMaps-2.0.1/Subspecs/Base/Frameworks/GoogleMapsBase.framework"; sourceTree = "<group>"; };
+		9371E0222024D9800042F902 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../../../../../../../Users/fdai5547/Downloads/5a212b0fa429156f-GoogleMaps-2.0.1/Subspecs/Maps/Frameworks/GoogleMaps.framework"; sourceTree = "<group>"; };
+		9371E0232024D9800042F902 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = "../../../../../../../../Users/fdai5547/Downloads/5a212b0fa429156f-GoogleMaps-2.0.1/Subspecs/Maps/Frameworks/GoogleMapsCore.framework"; sourceTree = "<group>"; };
+		9371E02C2024DB720042F902 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../../../../../../../../../../Users/fdai5547/Downloads/5a212b0fa429156f-GoogleMaps-2.0.1 2/Subspecs/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
 		D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumCollectionViewCell.swift; sourceTree = "<group>"; };
 		D303687B201A52EF00AB16E3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
@@ -41,6 +51,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9371E0242024D9800042F902 /* GoogleMaps.framework in Frameworks */,
+				9371E0252024D9800042F902 /* GoogleMapsCore.framework in Frameworks */,
+				9371E0212024D9640042F902 /* GoogleMapsBase.framework in Frameworks */,
 				D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +64,9 @@
 		D303687A201A52EF00AB16E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9371E0222024D9800042F902 /* GoogleMaps.framework */,
+				9371E0232024D9800042F902 /* GoogleMapsCore.framework */,
+				9371E0202024D9640042F902 /* GoogleMapsBase.framework */,
 				D303687B201A52EF00AB16E3 /* MapKit.framework */,
 			);
 			name = Frameworks;
@@ -101,6 +117,8 @@
 				D35D247A2012D54F0008817F /* AppDelegate.swift */,
 				D35D24812012D54F0008817F /* Assets.xcassets */,
 				D35D24832012D54F0008817F /* LaunchScreen.storyboard */,
+				9313C74B2024C16800FBADA7 /* Podfile */,
+				9371E02C2024DB720042F902 /* GoogleMaps.bundle */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -200,7 +218,9 @@
 			files = (
 				D35D24852012D54F0008817F /* LaunchScreen.storyboard in Resources */,
 				D35D24822012D54F0008817F /* Assets.xcassets in Resources */,
+				9313C74C2024C16800FBADA7 /* Podfile in Resources */,
 				D35D24802012D54F0008817F /* Main.storyboard in Resources */,
+				9371E02D2024DB720042F902 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +376,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C596PMQ723;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = NavigateMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.hs-fulda.informatik.mobApp.NavigateMe";
@@ -371,6 +395,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C596PMQ723;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = NavigateMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.hs-fulda.informatik.mobApp.NavigateMe";
