@@ -10,11 +10,11 @@ import UIKit
 
 class RaumCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var raum: UILabel!
-    @IBOutlet weak var beginn: UILabel!
-    @IBOutlet weak var ende: UILabel!
-    @IBOutlet weak var gruppe: UILabel!
-    @IBOutlet weak var lvaName: UILabel!
-    @IBOutlet weak var dozent: UILabel!
+//    @IBOutlet weak var raum: UILabel!
+//    @IBOutlet weak var beginn: UILabel!
+//    @IBOutlet weak var ende: UILabel!
+//    @IBOutlet weak var gruppe: UILabel!
+//    @IBOutlet weak var lvaName: UILabel!
+//    @IBOutlet weak var dozent: UILabel!
     
 }

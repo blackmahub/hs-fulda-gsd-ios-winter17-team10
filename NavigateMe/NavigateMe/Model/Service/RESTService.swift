@@ -13,7 +13,7 @@ class RESTService {
     let networkProtocol = "https"
     let host = "www.system2teach.de"
     
-    var delegate: JSONDataDelegate? = nil
+    var delegate: RESTServiceDelegate? = nil
     
     func callbackAfterCompletion(data: Data?, response: URLResponse?, error: Error?) {}
     

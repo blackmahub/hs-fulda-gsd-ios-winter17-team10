@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol JSONDataDelegate {
+protocol RESTServiceDelegate {
     
-    func dataDidRecieved(data: [S2TGebPlan])
+    func dataDidReceive(data: [S2TGebPlan])
     
 }

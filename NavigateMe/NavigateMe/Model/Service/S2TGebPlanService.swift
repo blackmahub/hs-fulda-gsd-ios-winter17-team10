@@ -27,7 +27,7 @@ class S2TGebPlanService: RESTService {
         do {
             
             let s2TGebPlans = try JSONDecoder().decode([S2TGebPlan].self, from: data)
-            self.delegate?.dataDidRecieved(data: s2TGebPlans)
+            self.delegate?.dataDidReceive(data: s2TGebPlans)
             
         } catch let jsonError {
             

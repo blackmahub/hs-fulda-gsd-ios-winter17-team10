@@ -10,7 +10,7 @@
 		D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */; };
 		D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D303687B201A52EF00AB16E3 /* MapKit.framework */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
-		D351136820136D2D00D9DCC9 /* JSONDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */; };
+		D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */; };
 		D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136920136F1800D9DCC9 /* S2TGebPlan .swift */; };
 		D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136B20136F3300D9DCC9 /* S2TGebPlanService.swift */; };
 		D35D247B2012D54F0008817F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35D247A2012D54F0008817F /* AppDelegate.swift */; };
@@ -24,7 +24,7 @@
 		D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumCollectionViewCell.swift; sourceTree = "<group>"; };
 		D303687B201A52EF00AB16E3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
-		D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDataDelegate.swift; sourceTree = "<group>"; };
+		D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTServiceDelegate.swift; sourceTree = "<group>"; };
 		D351136920136F1800D9DCC9 /* S2TGebPlan .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "S2TGebPlan .swift"; sourceTree = "<group>"; };
 		D351136B20136F3300D9DCC9 /* S2TGebPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S2TGebPlanService.swift; sourceTree = "<group>"; };
 		D35D24772012D54F0008817F /* NavigateMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigateMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,7 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				D351136520136D1200D9DCC9 /* RESTService.swift */,
-				D351136720136D2D00D9DCC9 /* JSONDataDelegate.swift */,
+				D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */,
 				D351136B20136F3300D9DCC9 /* S2TGebPlanService.swift */,
 			);
 			path = Service;
@@ -211,7 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D351136820136D2D00D9DCC9 /* JSONDataDelegate.swift in Sources */,
+				D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */,
 				D35D247D2012D54F0008817F /* ViewController.swift in Sources */,
 				D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */,
 				D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */,
