@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D301C9B020268B2B000938FB /* AppEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9AF20268B2B000938FB /* AppEngine.swift */; };
+		D301C9B22027284E000938FB /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9B12027284E000938FB /* Department.swift */; };
+		D301C9B420272A5B000938FB /* Geb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9B320272A5B000938FB /* Geb.swift */; };
+		D301C9B620272B04000938FB /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9B520272B04000938FB /* Floor.swift */; };
+		D301C9B820272B59000938FB /* Raum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9B720272B59000938FB /* Raum.swift */; };
+		D301C9BA20272F2D000938FB /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9B920272F2D000938FB /* Schedule.swift */; };
+		D301C9BC20272F46000938FB /* RaumStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9BB20272F46000938FB /* RaumStatus.swift */; };
+		D301C9BE20276B2E000938FB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9BD20276B2E000938FB /* Utils.swift */; };
+		D301C9C0202786BA000938FB /* AppEngineDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9BF202786BA000938FB /* AppEngineDelegate.swift */; };
 		D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */; };
 		D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D303687B201A52EF00AB16E3 /* MapKit.framework */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
@@ -21,6 +30,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D301C9AF20268B2B000938FB /* AppEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEngine.swift; sourceTree = "<group>"; };
+		D301C9B12027284E000938FB /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
+		D301C9B320272A5B000938FB /* Geb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geb.swift; sourceTree = "<group>"; };
+		D301C9B520272B04000938FB /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
+		D301C9B720272B59000938FB /* Raum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Raum.swift; sourceTree = "<group>"; };
+		D301C9B920272F2D000938FB /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		D301C9BB20272F46000938FB /* RaumStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumStatus.swift; sourceTree = "<group>"; };
+		D301C9BD20276B2E000938FB /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		D301C9BF202786BA000938FB /* AppEngineDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEngineDelegate.swift; sourceTree = "<group>"; };
 		D30309192013863D0023F7E9 /* RaumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumCollectionViewCell.swift; sourceTree = "<group>"; };
 		D303687B201A52EF00AB16E3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
@@ -127,6 +145,15 @@
 			children = (
 				D351136420136B8A00D9DCC9 /* Service */,
 				D351136920136F1800D9DCC9 /* S2TGebPlan .swift */,
+				D301C9AF20268B2B000938FB /* AppEngine.swift */,
+				D301C9B12027284E000938FB /* Department.swift */,
+				D301C9B320272A5B000938FB /* Geb.swift */,
+				D301C9B520272B04000938FB /* Floor.swift */,
+				D301C9B720272B59000938FB /* Raum.swift */,
+				D301C9B920272F2D000938FB /* Schedule.swift */,
+				D301C9BB20272F46000938FB /* RaumStatus.swift */,
+				D301C9BD20276B2E000938FB /* Utils.swift */,
+				D301C9BF202786BA000938FB /* AppEngineDelegate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,10 +240,19 @@
 			files = (
 				D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */,
 				D35D247D2012D54F0008817F /* ViewController.swift in Sources */,
+				D301C9B22027284E000938FB /* Department.swift in Sources */,
 				D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */,
+				D301C9C0202786BA000938FB /* AppEngineDelegate.swift in Sources */,
+				D301C9B420272A5B000938FB /* Geb.swift in Sources */,
+				D301C9BE20276B2E000938FB /* Utils.swift in Sources */,
 				D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */,
+				D301C9B820272B59000938FB /* Raum.swift in Sources */,
+				D301C9B620272B04000938FB /* Floor.swift in Sources */,
+				D301C9B020268B2B000938FB /* AppEngine.swift in Sources */,
 				D303091A2013863D0023F7E9 /* RaumCollectionViewCell.swift in Sources */,
 				D35D247B2012D54F0008817F /* AppDelegate.swift in Sources */,
+				D301C9BA20272F2D000938FB /* Schedule.swift in Sources */,
+				D301C9BC20272F46000938FB /* RaumStatus.swift in Sources */,
 				D351136620136D1200D9DCC9 /* RESTService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

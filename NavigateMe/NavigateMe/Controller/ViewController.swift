@@ -69,6 +69,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, /*UICollection
         print("Date Picker Calendar: " + searchDateTime.calendar.description)
         print("Date Picker Date: " + searchDateTime.date.description)
         print()
+        
+        Utils.dateEqual(searchDateTime.date, to: Date())
     }
     
     func dataDidReceive(data: [S2TGebPlan]) {
@@ -88,6 +90,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, /*UICollection
                 print("Buildling and Raum: " + plan.Raum)
                 print("Beginn: " + beginnDateTime.description)
                 print("Ende: " + endeDateTime.description)
+                print("Gruppe: " + plan.Gruppe)
                 print()
             }
             
@@ -139,4 +142,3 @@ class ViewController: UIViewController, UICollectionViewDelegate, /*UICollection
 //    }
     
 }
-
