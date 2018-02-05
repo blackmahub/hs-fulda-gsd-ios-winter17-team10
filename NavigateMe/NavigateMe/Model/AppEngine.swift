@@ -146,14 +146,15 @@ class AppEngine: RESTServiceDelegate {
         self.previousSearch = self.search!
         self.search = nil
         
-        self.delegate?.processDidComplete()
+        let freeRaumDTOs = generateFreeRaumDTO()
+        self.delegate?.processDidComplete(then: freeRaumDTOs)
     }
     
     func dataDidReceive(data: [S2TGebPlan]) {
         
         guard !data.isEmpty else {
             
-            self.delegate?.processDidAbort()
+            self.delegate?.processDidAbort(reason: "No Geb Plan is found from System2Teach.")
             return
         }
         
@@ -220,6 +221,8 @@ class AppEngine: RESTServiceDelegate {
     
     func searchFreeRaums() {
         
+//        TODO_CHECK_SEARCH_DATE_TIME_IS_WITHIN_UNIVERSITY_TIME
+        
         if previousSearch == nil || (previousSearch != nil && !Utils.onlyDateEqual(self.search!, to: self.previousSearch!)) {
         
             switch self.isStarted {
@@ -242,6 +245,40 @@ class AppEngine: RESTServiceDelegate {
         }
         
         startProcess()
+    }
+    
+    func generateFreeRaumDTO() -> [FreeRaumDTO] {
+        
+        var freeRaumDTOs = [FreeRaumDTO]()
+        
+        department.gebs.forEach { geb in
+            
+            geb.floors.forEach { floor in
+                
+                freeRaumDTOs += floor.raums.filter { raum -> Bool in
+                    
+                    var isFree: Bool
+                    
+                    switch raum.status {
+                        
+                        case .FREE(_):
+                            isFree = true
+                        
+                        case .OCCUPIED:
+                            isFree = false
+                        
+                    }
+                    
+                    return isFree
+                }
+                .map { raum -> FreeRaumDTO in
+                    
+                    return FreeRaumDTO(geb: geb.name, floor: floor.number, raum: raum.number, duration: Utils.secondToDateString(raum.status, format: <#T##String#>))
+                }
+            }
+        }
+        
+        return freeRaumDTOs
     }
     
 }

@@ -10,8 +10,8 @@ import Foundation
 
 protocol AppEngineDelegate {
     
-    func processDidComplete()
+    func processDidComplete(then dto: [FreeRaumDTO])
     
-    func processDidAbort()
+    func processDidAbort(reason message: String)
     
 }

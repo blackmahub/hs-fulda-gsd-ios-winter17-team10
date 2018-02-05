@@ -50,6 +50,13 @@ class Utils {
         return Date(timeIntervalSince1970: second)
     }
     
+    static func secondToDateString(_ second: TimeInterval, format: String) -> String {
+        
+        dateFormatter.dateFormat = format
+        let date = Date(timeIntervalSince1970: second)
+        return dateFormatter.string(from: date)
+    }
+    
     static func dateToTime(_ date: Date) -> Date {
         
         dateFormatter.dateFormat = "HH:mm"
