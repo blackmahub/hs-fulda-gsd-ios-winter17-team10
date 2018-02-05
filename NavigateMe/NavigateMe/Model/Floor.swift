@@ -11,6 +11,6 @@ import Foundation
 struct Floor {
     
     let number: Int
-    let raums: [Raum]
+    var raums: [Raum]
     
 }

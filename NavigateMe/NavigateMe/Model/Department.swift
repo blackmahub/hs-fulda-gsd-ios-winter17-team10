@@ -11,6 +11,6 @@ import Foundation
 struct Department {
     
     let name: String
-    let gebs: [Geb]
+    var gebs: [Geb]
     
 }

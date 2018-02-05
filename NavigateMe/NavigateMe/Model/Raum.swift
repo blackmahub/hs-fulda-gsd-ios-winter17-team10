@@ -14,7 +14,7 @@ struct Raum {
     var schedules = [Schedule]()
     
     // free duration in second
-    var status = RaumStatus.FREE(Utils.defaultFreeDuration(from: Date()))
+    var status = RaumStatus.FREE(Utils.defaultFreeDuration())
     
     init(number: Int) {
         

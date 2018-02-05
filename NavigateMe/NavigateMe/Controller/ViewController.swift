@@ -7,10 +7,8 @@
 //
 
 import UIKit
-import MapKit
-import CoreLocation
 
-class ViewController: UIViewController, UICollectionViewDelegate, /*UICollectionViewDataSource,*/ RESTServiceDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AppEngineDelegate {
     
     let s2TGebPlan = S2TGebPlanService()
     let locationManager = CLLocationManager()

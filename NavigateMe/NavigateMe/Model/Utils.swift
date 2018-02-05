@@ -10,7 +10,16 @@ import Foundation
 
 class Utils {
     
+    private enum TimeType {
+        
+        case OPEN, CLOSE
+    }
+    
     static private let dateFormatter = DateFormatter()
+    static private let universityOpenTime = "08:00"
+    static private let universityCloseTime = "20:00"
+    
+    
     
     static private func equal(_ date1: Date, to date2: Date, using format: String) -> Bool {
         
@@ -41,12 +50,43 @@ class Utils {
         return Date(timeIntervalSince1970: second)
     }
     
-    static func defaultFreeDuration(from date: Date) -> TimeInterval {
+    static func dateToTime(_ date: Date) -> Date {
         
+        dateFormatter.dateFormat = "HH:mm"
+        let strTime = dateFormatter.string(from: date)
+        return dateFormatter.date(from: strTime)!
     }
     
-    static func universityClosingTime() -> Date {
+    static private func universityTime(of what: TimeType) -> Date {
+     
+        dateFormatter.dateFormat = "HH:mm"
         
+        switch what {
+            case .OPEN:
+                return dateFormatter.date(from: Utils.universityOpenTime)!
+            
+            case .CLOSE:
+                return dateFormatter.date(from: Utils.universityCloseTime)!
+        }
+    }
+    
+    static func defaultFreeDuration() -> TimeInterval {
+        
+        return Utils.universityTime(of: .CLOSE).timeIntervalSince1970 - Utils.universityTime(of: .OPEN).timeIntervalSince1970
+    }
+    
+    static func freeDurationTillUniversityClose(from date: Date) -> TimeInterval {
+        
+        return Utils.universityTime(of: .CLOSE).timeIntervalSince1970 - Utils.dateToTime(date).timeIntervalSince1970
+    }
+    
+    static func withinUniversityTime(_ date: Date) -> Bool {
+        
+        let time = Utils.dateToTime(date)
+        let universityOpenTime = Utils.universityTime(of: .OPEN)
+        let universityCloseTime = Utils.universityTime(of: .CLOSE)
+        
+        return (time == universityOpenTime || time > universityOpenTime) && time < universityCloseTime
     }
     
 }

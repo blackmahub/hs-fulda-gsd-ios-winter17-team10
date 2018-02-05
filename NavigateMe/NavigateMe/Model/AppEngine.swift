@@ -35,8 +35,6 @@ class AppEngine: RESTServiceDelegate {
         search = nil
         delegate = nil
         
-        s2TGebPlan.delegate = self
-        
         // static mapping
         // floor mapping with raums
         let floor2Raums = [0: [9], 1 : [105, 107, 112, 121, 129, 131, 133, 139], 3 : [332]]
@@ -58,6 +56,8 @@ class AppEngine: RESTServiceDelegate {
         
         let geb = Geb(name: "46(E)", floors: floors)
         department = Department(name: "Angewandte Informatik", gebs: [geb])
+        
+        s2TGebPlan.delegate = self
     }
     
     // load data into decision tree
@@ -70,15 +70,18 @@ class AppEngine: RESTServiceDelegate {
     // refresh decision tree
     private func stopEngine() {
         
+        var raum: Raum? = nil
+        
         // reset raum schedules
         department.gebs.forEach { geb in
             
             geb.floors.forEach { floor in
                 
-                floor.raums.forEach { raum in
+                for raumIndex in floor.raums.indices {
                     
-                    raum.status = .FREE(Utils.defaultFreeDuration(from: self.search!))
-                    raum.schedule.removeAll()
+                    raum = floor.raums[raumIndex]
+                    raum!.status = .FREE(Utils.defaultFreeDuration())
+                    raum!.schedules.removeAll()
                 }
             }
         }
@@ -94,31 +97,46 @@ class AppEngine: RESTServiceDelegate {
     // make decision from decision tree
     private func startProcess() {
         
-        var freeSchedules = [Schedule](), freeEndee: Date? = nil
+        var raum: Raum? = nil, freeSchedules = [Schedule](), beforeBeginns = [Schedule](), minBeforeBeginn: Schedule? = nil
         
         department.gebs.forEach { geb in
             
             geb.floors.forEach { floor in
                 
-                floor.raums.forEach { raum in
+                for raumIndex in floor.raums.indices {
                     
-                    freeSchedules = raum.schedules.filter { schedule in
+                    raum = floor.raums[raumIndex]
+                    
+                    // filter schedules where search date time are not within beginn and ende range
+                    freeSchedules = raum!.schedules.filter { schedule in
                         
                         return !((schedule.beginn == self.search! || schedule.beginn < self.search!) && self.search! < schedule.ende)
                     }
                     
                     if freeSchedules.count == 0 {
                         
-                        raum.status = .OCCUPIED
+                        raum!.status = .OCCUPIED
                     
                     } else {
                     
-                        freeEndee = Utils.universityClosingTime()
+                        // filter schedules where search date time is less than beginn
+                        beforeBeginns = freeSchedules.filter { freeSchedule in
+                            
+                            return self.search! < freeSchedule.beginn
+                        }
                         
-                        freeSchedules.forEach { freeSchedule in
+                        if beforeBeginns.count == 0 {
                             
+                            raum!.status = .FREE(Utils.freeDurationTillUniversityClose(from: self.search!))
+                        
+                        } else {
                             
-                            if freeSchedule
+                            minBeforeBeginn = beforeBeginns.min(by: { (schedule1, schedule2) -> Bool in
+                                
+                                return schedule1.beginn < schedule2.beginn
+                            })
+                            
+                            raum!.status = .FREE(minBeforeBeginn!.beginn.timeIntervalSince1970 - self.search!.timeIntervalSince1970)
                         }
                     }
                 }
@@ -139,13 +157,13 @@ class AppEngine: RESTServiceDelegate {
             return
         }
         
-        var gebRaums = [String](), mappedIndices = [Int](), beginn: Date? = nil, ende: Date? = nil, raumFromS2T: String? = nil, isScheduleAppended = false
+        var gebRaums = [Substring](), mappedIndices = [Int](), beginn: Date? = nil, ende: Date? = nil, raumFromS2T: String? = nil, isScheduleAppended = false, geb: Geb? = nil, floor: Floor? = nil, raum: Raum? = nil
         
         data.forEach { gebPlan in
             
             gebRaums = gebPlan.Raum.split(separator: "/")
             
-            raumFromS2T = gebRaums[0]
+            raumFromS2T = String(gebRaums[0])
             
             beginn = Utils.millisecondToDate(Double(gebPlan.Beginn))
             ende = Utils.millisecondToDate(Double(gebPlan.Ende))
@@ -153,7 +171,7 @@ class AppEngine: RESTServiceDelegate {
             if mapWithS2T.keys.contains(raumFromS2T!) {
             
                 // mapping contains geb, floor, raum numbers
-                indexMapping = mapWithS2T[raumFromS2T!]
+                mappedIndices = mapWithS2T[raumFromS2T!]!
                 
                 // append raum schedules
                 department.gebs[mappedIndices[0]].floors[mappedIndices[1]].raums[mappedIndices[2]].schedules += [Schedule(beginn: beginn!, ende: ende!)]
@@ -162,17 +180,23 @@ class AppEngine: RESTServiceDelegate {
             
                 isScheduleAppended = false
                 
-                gebRaums = raumFromS2T!.split(separator: "\\.")
+                gebRaums = raumFromS2T!.split(separator: ".")
                 
-                for (gebIndex, geb) in department.gebs {
+                for gebIndex in department.gebs.indices {
                     
-                    for (floorIndex, floor) in geb.floors {
+                    geb = department.gebs[gebIndex]
+                    
+                    for floorIndex in geb!.floors.indices {
                         
-                        for (raumIndex, raum) in floor.raums {
+                        floor = geb!.floors[floorIndex]
+                        
+                        for raumIndex in floor!.raums.indices {
                             
-                            if raum.number == Int(gebRaums[1]) {
+                            raum = floor!.raums[raumIndex]
+                            
+                            if raum!.number == Int(gebRaums[1]) {
                                 
-                                raum.schedules += [Schedule(beginn: beginn!, ende: ende!)]
+                                raum!.schedules += [Schedule(beginn: beginn!, ende: ende!)]
                                 mapWithS2T[raumFromS2T!] = [gebIndex, floorIndex, raumIndex]
                                 isScheduleAppended = true
                                 break

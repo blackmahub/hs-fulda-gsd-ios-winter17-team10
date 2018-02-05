@@ -12,7 +12,7 @@ enum RaumStatus {
     
     case OCCUPIED
     
-    // how long it will be free
+    // how long it will be free (in second)
     case FREE(TimeInterval)
 
 }

@@ -11,6 +11,6 @@ import Foundation
 struct Geb {
     
     let name: String
-    let floors: [Floor]
+    var floors: [Floor]
     
 }
