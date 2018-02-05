@@ -113,7 +113,7 @@ class AppEngine: RESTServiceDelegate {
                     
                     } else {
                     
-                        freeEndee = Utils.defaultFreeDuration(from: self.search!)
+                        freeEndee = Utils.universityClosingTime()
                         
                         freeSchedules.forEach { freeSchedule in
                             

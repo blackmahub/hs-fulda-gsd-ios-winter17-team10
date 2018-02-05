@@ -45,4 +45,8 @@ class Utils {
         
     }
     
+    static func universityClosingTime() -> Date {
+        
+    }
+    
 }
