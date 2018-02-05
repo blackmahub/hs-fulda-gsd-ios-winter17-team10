@@ -10,5 +10,8 @@ import Foundation
 
 protocol AppEngineDelegate {
     
-    func processDidStop()
+    func processDidComplete()
+    
+    func processDidAbort()
+    
 }

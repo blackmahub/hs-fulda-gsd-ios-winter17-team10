@@ -30,7 +30,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, /*UICollection
         
         s2TGebPlan.delegate = self
         
-        s2TGebPlan.get(of: nil)
+        s2TGebPlan.get(of: nil, on: Date())
         
 //        campusMap.delegate = self
         
@@ -70,7 +70,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, /*UICollection
         print("Date Picker Date: " + searchDateTime.date.description)
         print()
         
-        Utils.dateEqual(searchDateTime.date, to: Date())
+        print(Utils.onlyDateEqual(searchDateTime.date, to: Date()))
     }
     
     func dataDidReceive(data: [S2TGebPlan]) {
@@ -78,6 +78,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, /*UICollection
         DispatchQueue.main.async {
             
             self.s2TGebPlans = data
+            
+            print("Total Records: \(self.s2TGebPlans.count)")
             
             for plan in self.s2TGebPlans {
                 

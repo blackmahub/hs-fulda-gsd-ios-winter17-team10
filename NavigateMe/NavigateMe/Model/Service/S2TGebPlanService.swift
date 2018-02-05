@@ -35,7 +35,7 @@ class S2TGebPlanService: RESTService {
         }
     }
     
-    func get(of geb: [String]?) {
+    func get(of geb: [String]?, on date: Date) {
         
         var query = [String : String?]()
         

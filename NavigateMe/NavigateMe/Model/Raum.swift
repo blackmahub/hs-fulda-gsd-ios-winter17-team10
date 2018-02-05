@@ -11,11 +11,14 @@ import Foundation
 struct Raum {
     
     let number: Int
-    var schedule = [Schedule]()
-    var status = RaumStatus.FREE(0.0)
+    var schedules = [Schedule]()
+    
+    // free duration in second
+    var status = RaumStatus.FREE(Utils.defaultFreeDuration(from: Date()))
     
     init(number: Int) {
         
         self.number = number
     }
+    
 }

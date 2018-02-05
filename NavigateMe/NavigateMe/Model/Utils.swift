@@ -34,4 +34,15 @@ class Utils {
         
         return equal(date1, to: date2, using: "HH:mm")
     }
+    
+    static func millisecondToDate(_ millisecond: TimeInterval) -> Date {
+        
+        let second = millisecond / 1000.0
+        return Date(timeIntervalSince1970: second)
+    }
+    
+    static func defaultFreeDuration(from date: Date) -> TimeInterval {
+        
+    }
+    
 }
