@@ -221,7 +221,11 @@ class AppEngine: RESTServiceDelegate {
     
     func searchFreeRaums() {
         
-//        TODO_CHECK_SEARCH_DATE_TIME_IS_WITHIN_UNIVERSITY_TIME
+        guard Utils.withinUniversityTime(self.search!) else {
+            
+            self.delegate?.processDidAbort(reason: "Search date time is need to be with in university open and close times.")
+            return
+        }
         
         if previousSearch == nil || (previousSearch != nil && !Utils.onlyDateEqual(self.search!, to: self.previousSearch!)) {
         
@@ -273,7 +277,18 @@ class AppEngine: RESTServiceDelegate {
                 }
                 .map { raum -> FreeRaumDTO in
                     
-                    return FreeRaumDTO(geb: geb.name, floor: floor.number, raum: raum.number, duration: Utils.secondToDateString(raum.status, format: <#T##String#>))
+                    var freeTimeInterval: TimeInterval
+                    
+                    switch raum.status {
+                        
+                        case let .FREE(duration):
+                            freeTimeInterval = duration
+                        
+                        case .OCCUPIED:
+                            freeTimeInterval = 0.0
+                    }
+                    
+                    return FreeRaumDTO(geb: geb.name, floor: floor.number, raum: raum.number, duration: Utils.secondToDateString(freeTimeInterval, format: "HH:mm"))
                 }
             }
         }
