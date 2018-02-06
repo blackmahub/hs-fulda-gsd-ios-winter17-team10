@@ -17,7 +17,7 @@ class Utils {
     
     static private let dateFormatter = DateFormatter()
     static private let universityOpenTime = "08:00"
-    static private let universityCloseTime = "20:00"
+    static private let universityCloseTime = "20:30"
     
     
     
