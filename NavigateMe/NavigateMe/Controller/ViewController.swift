@@ -21,7 +21,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
         app.delegate = self
+        
+        gebCollectionView.delegate = self
+        gebCollectionView.dataSource = self
     }
     
     @IBAction func searchFreeRaums(_ sender: UIButton) {
@@ -34,18 +38,34 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return self.freeRaums.count
+        guard let floors = self.freeRaums["46(E)"] else {
+            
+            return 0
+        }
+        
+        return floors.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GebCell", for: indexPath) as! GebCollectionViewCell
         
-        for (index, geb) in self.freeRaums.keys.enumerated() {
+        guard let floors = self.freeRaums["46(E)"] else {
+            
+            return cell
+        }
+        
+        for (index, floor) in floors.keys.enumerated() {
             
             if indexPath.item == index {
                 
-                cell.gebLabel.text = geb
+                cell.gebLabel.text = "Geb 46(E): Floor \(floor)"
+                
+                cell.freeRaumLabel.text = floors[floor]!.reduce("", { (result, raum) in
+                    
+                    return result + raum + "\n"
+                })
+                
                 break
             }
         }
@@ -81,13 +101,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             print("Free Raums Dictionary:")
             print(self.freeRaums.description)
+        
+            self.abortMessageLabel.isHidden = true
+            
+            self.gebCollectionView.isHidden = false
+            self.gebCollectionView.reloadData()
         }
     }
     
     func processDidAbort(reason message: String) {
         
-        print("Process is aborted.")
-        print("Reason: " + message)
+        DispatchQueue.main.async {
+            
+            print("Process is aborted.")
+            print("Reason: " + message)
+            
+            self.gebCollectionView.isHidden = true
+            
+            self.abortMessageLabel.isHidden = false
+            self.abortMessageLabel.text = "Process is aborted.\nReason: " + message
+        }
     }
     
 }

@@ -74,18 +74,15 @@ class AppEngine: RESTServiceDelegate {
         
         print("Engine stopping ...")
         
-        var raum: Raum? = nil
-        
         // reset raum schedules
-        department.gebs.forEach { geb in
+        for gebIndex in department.gebs.indices {
             
-            geb.floors.forEach { floor in
+            for floorIndex in department.gebs[gebIndex].floors.indices {
                 
-                for raumIndex in floor.raums.indices {
+                for raumIndex in department.gebs[gebIndex].floors[floorIndex].raums.indices {
                     
-                    raum = floor.raums[raumIndex]
-                    raum!.status = .FREE(Utils.defaultFreeDuration())
-                    raum!.schedules.removeAll()
+                    department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(Utils.defaultFreeDuration())
+                    department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.removeAll()
                 }
             }
         }
@@ -122,7 +119,11 @@ class AppEngine: RESTServiceDelegate {
                     print("Raum Status: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status)")
                     
                     // if there is no schedule for this raum then continue to next raum
+                    // and also reduce free duration from (uni close time - uni open time) to (uni close time - search time)
                     if department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.count == 0 {
+                        
+                        // raum status is free
+                        department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(Utils.freeDurationTillUniversityClose(from: self.search!))
                         
                         continue
                     }
@@ -187,6 +188,9 @@ class AppEngine: RESTServiceDelegate {
             self.delegate?.processDidAbort(reason: "No Geb Plan is found from System2Teach.")
             return
         }
+        
+        print("\nInitial values of Decision Tree:\n")
+        print("\(self.department)")
         
         var gebRaums = [Substring](), mappedIndices = [Int](), beginn: Date? = nil, ende: Date? = nil, raumFromS2T: String? = nil, isScheduleAppended = false
     
@@ -255,6 +259,14 @@ class AppEngine: RESTServiceDelegate {
         })
         
         print("\nRecord Count: \(recordCount)\n")
+        
+        // if S2T data count is not equal to transformed decision tree record count
+        // then abort the process and check for data accuracy
+        guard data.count == recordCount else {
+            
+            self.delegate?.processDidAbort(reason: "Data accuracy is failed, please check System2Teach data transformation block.")
+            return
+        }
         
         startProcess()
     }

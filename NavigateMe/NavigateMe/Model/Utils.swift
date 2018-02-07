@@ -16,8 +16,10 @@ class Utils {
     }
     
     static private let dateFormatter = DateFormatter()
-    static private let universityOpenTime = "08:00"
-    static private let universityCloseTime = "20:30"
+    
+    // Actual University open time is 08:00 and close time is 20:30 as per GMT+001
+    static private let universityOpenTime = "07:00" // as per GMT+000
+    static private let universityCloseTime = "19:30" // as per GMT+000
     
     
     

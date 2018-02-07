@@ -11,6 +11,7 @@ import UIKit
 class GebCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var gebLabel: UILabel!
-    @IBOutlet weak var floorCollectionView: UICollectionView!
     
+    @IBOutlet weak var freeRaumLabel: UILabel!
+
 }

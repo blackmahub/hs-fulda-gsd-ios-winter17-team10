@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9371E0312029E7DF0042F902 /* GebCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371E0302029E7DF0042F902 /* GebCollectionViewCell.swift */; };
-		9371E0332029E97A0042F902 /* FloorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371E0322029E97A0042F902 /* FloorCollectionViewCell.swift */; };
 		93F6D77A2028CE080074592D /* FreeRaumDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F6D7792028CE080074592D /* FreeRaumDTO.swift */; };
 		D301C9B020268B2B000938FB /* AppEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9AF20268B2B000938FB /* AppEngine.swift */; };
 		D301C9B22027284E000938FB /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9B12027284E000938FB /* Department.swift */; };
@@ -33,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		9371E0302029E7DF0042F902 /* GebCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GebCollectionViewCell.swift; sourceTree = "<group>"; };
-		9371E0322029E97A0042F902 /* FloorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorCollectionViewCell.swift; sourceTree = "<group>"; };
 		93F6D7792028CE080074592D /* FreeRaumDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRaumDTO.swift; sourceTree = "<group>"; };
 		D301C9AF20268B2B000938FB /* AppEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEngine.swift; sourceTree = "<group>"; };
 		D301C9B12027284E000938FB /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 			children = (
 				D35D247C2012D54F0008817F /* ViewController.swift */,
 				9371E0302029E7DF0042F902 /* GebCollectionViewCell.swift */,
-				9371E0322029E97A0042F902 /* FloorCollectionViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -263,7 +260,6 @@
 				D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */,
 				9371E0312029E7DF0042F902 /* GebCollectionViewCell.swift in Sources */,
 				D301C9B820272B59000938FB /* Raum.swift in Sources */,
-				9371E0332029E97A0042F902 /* FloorCollectionViewCell.swift in Sources */,
 				D301C9B620272B04000938FB /* Floor.swift in Sources */,
 				D301C9B020268B2B000938FB /* AppEngine.swift in Sources */,
 				D35D247B2012D54F0008817F /* AppDelegate.swift in Sources */,
