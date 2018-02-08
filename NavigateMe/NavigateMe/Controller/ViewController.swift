@@ -30,7 +30,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func searchFreeRaums(_ sender: UIButton) {
         
-        print("Date Picker Date: " + searchDateTime.date.description + "\n")
+        print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
         
         app.search = searchDateTime.date
         app.searchFreeRaums()
@@ -74,6 +74,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func processDidComplete(then dto: [FreeRaumDTO]) {
+        
+        // reset free raums dictionary
+        self.freeRaums = [String : [Int : [String]]]()
         
         DispatchQueue.main.async {
             
