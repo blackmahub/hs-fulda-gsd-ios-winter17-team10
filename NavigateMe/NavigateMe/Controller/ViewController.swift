@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreImage
+import TesseractOCR
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AppEngineDelegate {
     
@@ -30,10 +32,50 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func searchFreeRaums(_ sender: UIButton) {
         
+        // detect text on image and print that text on console
+        let floorPlanImage = CIImage(contentsOf: Bundle.main.url(forResource: "E1", withExtension: "png")!)!
+        let imageContext = CIContext()
+        
+        let textDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeText, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
+        
+        let features = textDetectorInFloorPlan.features(in: floorPlanImage)
+        var i = 0
+        
+        for feature in features {
+            
+            i += 1
+            
+            let textFeature = feature as! CITextFeature
+            
+            print("Before Rect Increase: \(textFeature.bounds)\n")
+            let textRect = textFeature.bounds.insetBy(dx: CGFloat(-5), dy: CGFloat(-5))
+            print("After Rect Increase: \(textRect)\n")
+            
+            let textCGImage = imageContext.createCGImage(floorPlanImage, from: textRect)!
+            
+            do {
+                
+                try imageContext.writePNGRepresentation(of: CIImage(cgImage: textCGImage), to: URL(fileURLWithPath: "/Users/mahbub/Pictures/Raum-\(i).png"), format: kCIFormatRGBA8, colorSpace: floorPlanImage.colorSpace!, options: [:])
+                
+            } catch let err {
+                print("\nERROR: " + err.localizedDescription + "\n")
+            }
+            
+            let image = UIImage(cgImage: textCGImage).scaleImage(640)!
+            
+            if let tesseract = G8Tesseract(language: "eng") {
+                tesseract.engineMode = .tesseractCubeCombined
+                tesseract.pageSegmentationMode = .auto
+                tesseract.image = image.g8_blackAndWhite()
+                tesseract.recognize()
+                print("Image \(i): OCR Result: \(tesseract.recognizedText)\n")
+            }
+        }
+        
         print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
         
-        app.search = searchDateTime.date
-        app.searchFreeRaums()
+//        app.search = searchDateTime.date
+//        app.searchFreeRaums()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -126,4 +168,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+}
+
+extension UIImage {
+    func scaleImage(_ maxDimension: CGFloat) -> UIImage? {
+        
+        var scaledSize = CGSize(width: maxDimension, height: maxDimension)
+        
+        if size.width > size.height {
+            let scaleFactor = size.height / size.width
+            scaledSize.height = scaledSize.width * scaleFactor
+        } else {
+            let scaleFactor = size.width / size.height
+            scaledSize.width = scaledSize.height * scaleFactor
+        }
+        
+        UIGraphicsBeginImageContext(scaledSize)
+        draw(in: CGRect(origin: .zero, size: scaledSize))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return scaledImage
+    }
 }

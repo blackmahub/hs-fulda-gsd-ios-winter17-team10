@@ -18,7 +18,11 @@
 		D301C9BC20272F46000938FB /* RaumStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9BB20272F46000938FB /* RaumStatus.swift */; };
 		D301C9BE20276B2E000938FB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9BD20276B2E000938FB /* Utils.swift */; };
 		D301C9C0202786BA000938FB /* AppEngineDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301C9BF202786BA000938FB /* AppEngineDelegate.swift */; };
-		D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D303687B201A52EF00AB16E3 /* MapKit.framework */; };
+		D33BD9B82033E6360087FCB8 /* E1.png in Resources */ = {isa = PBXBuildFile; fileRef = D33BD9B72033E6360087FCB8 /* E1.png */; };
+		D33BD9BA2033EBEA0087FCB8 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D33BD9B92033EBE90087FCB8 /* libstdc++.tbd */; };
+		D33BD9BC2033EBF20087FCB8 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33BD9BB2033EBF20087FCB8 /* CoreImage.framework */; };
+		D33BD9BD2033EBF80087FCB8 /* TesseractOCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33BD9BE2033EBF80087FCB8 /* TesseractOCR.framework */; };
+		D33BDA872033F28A0087FCB8 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = D33BDA862033F28A0087FCB8 /* tessdata */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
 		D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */; };
 		D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136920136F1800D9DCC9 /* S2TGebPlan .swift */; };
@@ -28,11 +32,32 @@
 		D35D24802012D54F0008817F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35D247E2012D54F0008817F /* Main.storyboard */; };
 		D35D24822012D54F0008817F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D35D24812012D54F0008817F /* Assets.xcassets */; };
 		D35D24852012D54F0008817F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35D24832012D54F0008817F /* LaunchScreen.storyboard */; };
+		D3EEB6EF2031B739003AB471 /* E0.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EEB6EA2031B0F4003AB471 /* E0.png */; };
+		D3EEB6F02031B739003AB471 /* E00.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EEB6EB2031B0F4003AB471 /* E00.png */; };
+		D3EEB6F22031B739003AB471 /* E2.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EEB6ED2031B0F4003AB471 /* E2.png */; };
+		D3EEB6F32031B739003AB471 /* E3.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EEB6EE2031B0F4003AB471 /* E3.png */; };
+		F2B374E0BCDA1CAE3335807F /* Pods_NavigateMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B95BE8E822E7D6C756EA895 /* Pods_NavigateMe.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D3F558532032C89A009B5B6B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8B95BE8E822E7D6C756EA895 /* Pods_NavigateMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NavigateMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9371E0302029E7DF0042F902 /* GebCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GebCollectionViewCell.swift; sourceTree = "<group>"; };
 		93F6D7792028CE080074592D /* FreeRaumDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRaumDTO.swift; sourceTree = "<group>"; };
+		B0DF4C0823F92A53A8DF29D0 /* Pods-NavigateMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigateMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NavigateMe/Pods-NavigateMe.debug.xcconfig"; sourceTree = "<group>"; };
+		C3C0B5A33039EB4CE4E09413 /* Pods-NavigateMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigateMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NavigateMe/Pods-NavigateMe.release.xcconfig"; sourceTree = "<group>"; };
 		D301C9AF20268B2B000938FB /* AppEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEngine.swift; sourceTree = "<group>"; };
 		D301C9B12027284E000938FB /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
 		D301C9B320272A5B000938FB /* Geb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geb.swift; sourceTree = "<group>"; };
@@ -42,7 +67,32 @@
 		D301C9BB20272F46000938FB /* RaumStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaumStatus.swift; sourceTree = "<group>"; };
 		D301C9BD20276B2E000938FB /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D301C9BF202786BA000938FB /* AppEngineDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEngineDelegate.swift; sourceTree = "<group>"; };
-		D303687B201A52EF00AB16E3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D33BD9B72033E6360087FCB8 /* E1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E1.png; sourceTree = "<group>"; };
+		D33BD9B92033EBE90087FCB8 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		D33BD9BB2033EBF20087FCB8 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		D33BD9BE2033EBF80087FCB8 /* TesseractOCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TesseractOCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D33BDA182033EF150087FCB8 /* dan-frak.traineddata */ = {isa = PBXFileReference; lastKnownFileType = file; path = "dan-frak.traineddata"; sourceTree = "<group>"; };
+		D33BDA192033EF150087FCB8 /* deu-frak.traineddata */ = {isa = PBXFileReference; lastKnownFileType = file; path = "deu-frak.traineddata"; sourceTree = "<group>"; };
+		D33BDA1A2033EF150087FCB8 /* eng.cube.bigrams */ = {isa = PBXFileReference; lastKnownFileType = text; path = eng.cube.bigrams; sourceTree = "<group>"; };
+		D33BDA1B2033EF150087FCB8 /* eng.cube.fold */ = {isa = PBXFileReference; lastKnownFileType = text; path = eng.cube.fold; sourceTree = "<group>"; };
+		D33BDA1C2033EF150087FCB8 /* eng.cube.lm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = eng.cube.lm; sourceTree = "<group>"; };
+		D33BDA1D2033EF150087FCB8 /* eng.cube.nn */ = {isa = PBXFileReference; lastKnownFileType = file; path = eng.cube.nn; sourceTree = "<group>"; };
+		D33BDA1E2033EF150087FCB8 /* eng.cube.params */ = {isa = PBXFileReference; lastKnownFileType = text; path = eng.cube.params; sourceTree = "<group>"; };
+		D33BDA1F2033EF150087FCB8 /* eng.cube.size */ = {isa = PBXFileReference; lastKnownFileType = text; path = eng.cube.size; sourceTree = "<group>"; };
+		D33BDA202033EF150087FCB8 /* eng.cube.word-freq */ = {isa = PBXFileReference; lastKnownFileType = text; path = "eng.cube.word-freq"; sourceTree = "<group>"; };
+		D33BDA212033EF150087FCB8 /* eng.tesseract_cube.nn */ = {isa = PBXFileReference; lastKnownFileType = file; path = eng.tesseract_cube.nn; sourceTree = "<group>"; };
+		D33BDA222033EF150087FCB8 /* eng.traineddata */ = {isa = PBXFileReference; lastKnownFileType = file; path = eng.traineddata; sourceTree = "<group>"; };
+		D33BDA232033EF150087FCB8 /* fra.cube.bigrams */ = {isa = PBXFileReference; lastKnownFileType = text; path = fra.cube.bigrams; sourceTree = "<group>"; };
+		D33BDA242033EF150087FCB8 /* fra.cube.fold */ = {isa = PBXFileReference; lastKnownFileType = text; path = fra.cube.fold; sourceTree = "<group>"; };
+		D33BDA252033EF150087FCB8 /* fra.cube.lm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = fra.cube.lm; sourceTree = "<group>"; };
+		D33BDA262033EF150087FCB8 /* fra.cube.nn */ = {isa = PBXFileReference; lastKnownFileType = file; path = fra.cube.nn; sourceTree = "<group>"; };
+		D33BDA272033EF150087FCB8 /* fra.cube.params */ = {isa = PBXFileReference; lastKnownFileType = text; path = fra.cube.params; sourceTree = "<group>"; };
+		D33BDA282033EF150087FCB8 /* fra.cube.size */ = {isa = PBXFileReference; lastKnownFileType = text; path = fra.cube.size; sourceTree = "<group>"; };
+		D33BDA292033EF150087FCB8 /* fra.cube.word-freq */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fra.cube.word-freq"; sourceTree = "<group>"; };
+		D33BDA2A2033EF150087FCB8 /* fra.tesseract_cube.nn */ = {isa = PBXFileReference; lastKnownFileType = file; path = fra.tesseract_cube.nn; sourceTree = "<group>"; };
+		D33BDA2B2033EF150087FCB8 /* fra.traineddata */ = {isa = PBXFileReference; lastKnownFileType = file; path = fra.traineddata; sourceTree = "<group>"; };
+		D33BDA2C2033EF150087FCB8 /* slk-frak.traineddata */ = {isa = PBXFileReference; lastKnownFileType = file; path = "slk-frak.traineddata"; sourceTree = "<group>"; };
+		D33BDA862033F28A0087FCB8 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tessdata; path = ../../../../../../Downloads/OCR_Tutorial_Resources/tessdata; sourceTree = "<group>"; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
 		D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTServiceDelegate.swift; sourceTree = "<group>"; };
 		D351136920136F1800D9DCC9 /* S2TGebPlan .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "S2TGebPlan .swift"; sourceTree = "<group>"; };
@@ -54,6 +104,10 @@
 		D35D24812012D54F0008817F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D35D24842012D54F0008817F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D35D24862012D54F0008817F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3EEB6EA2031B0F4003AB471 /* E0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E0.png; sourceTree = "<group>"; };
+		D3EEB6EB2031B0F4003AB471 /* E00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E00.png; sourceTree = "<group>"; };
+		D3EEB6ED2031B0F4003AB471 /* E2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E2.png; sourceTree = "<group>"; };
+		D3EEB6EE2031B0F4003AB471 /* E3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E3.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +115,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D303687C201A52EF00AB16E3 /* MapKit.framework in Frameworks */,
+				D33BD9BD2033EBF80087FCB8 /* TesseractOCR.framework in Frameworks */,
+				D33BD9BC2033EBF20087FCB8 /* CoreImage.framework in Frameworks */,
+				D33BD9BA2033EBEA0087FCB8 /* libstdc++.tbd in Frameworks */,
+				F2B374E0BCDA1CAE3335807F /* Pods_NavigateMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,12 +133,52 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		959C51052DA60BA684FD4C1E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B0DF4C0823F92A53A8DF29D0 /* Pods-NavigateMe.debug.xcconfig */,
+				C3C0B5A33039EB4CE4E09413 /* Pods-NavigateMe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D303687A201A52EF00AB16E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D303687B201A52EF00AB16E3 /* MapKit.framework */,
+				D33BD9BE2033EBF80087FCB8 /* TesseractOCR.framework */,
+				D33BD9BB2033EBF20087FCB8 /* CoreImage.framework */,
+				D33BD9B92033EBE90087FCB8 /* libstdc++.tbd */,
+				8B95BE8E822E7D6C756EA895 /* Pods_NavigateMe.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D33BDA172033EF150087FCB8 /* tessdata */ = {
+			isa = PBXGroup;
+			children = (
+				D33BDA182033EF150087FCB8 /* dan-frak.traineddata */,
+				D33BDA192033EF150087FCB8 /* deu-frak.traineddata */,
+				D33BDA1A2033EF150087FCB8 /* eng.cube.bigrams */,
+				D33BDA1B2033EF150087FCB8 /* eng.cube.fold */,
+				D33BDA1C2033EF150087FCB8 /* eng.cube.lm */,
+				D33BDA1D2033EF150087FCB8 /* eng.cube.nn */,
+				D33BDA1E2033EF150087FCB8 /* eng.cube.params */,
+				D33BDA1F2033EF150087FCB8 /* eng.cube.size */,
+				D33BDA202033EF150087FCB8 /* eng.cube.word-freq */,
+				D33BDA212033EF150087FCB8 /* eng.tesseract_cube.nn */,
+				D33BDA222033EF150087FCB8 /* eng.traineddata */,
+				D33BDA232033EF150087FCB8 /* fra.cube.bigrams */,
+				D33BDA242033EF150087FCB8 /* fra.cube.fold */,
+				D33BDA252033EF150087FCB8 /* fra.cube.lm */,
+				D33BDA262033EF150087FCB8 /* fra.cube.nn */,
+				D33BDA272033EF150087FCB8 /* fra.cube.params */,
+				D33BDA282033EF150087FCB8 /* fra.cube.size */,
+				D33BDA292033EF150087FCB8 /* fra.cube.word-freq */,
+				D33BDA2A2033EF150087FCB8 /* fra.tesseract_cube.nn */,
+				D33BDA2B2033EF150087FCB8 /* fra.traineddata */,
+				D33BDA2C2033EF150087FCB8 /* slk-frak.traineddata */,
+			);
+			path = tessdata;
 			sourceTree = "<group>";
 		};
 		D351136420136B8A00D9DCC9 /* Service */ = {
@@ -97,9 +194,11 @@
 		D35D246E2012D54E0008817F = {
 			isa = PBXGroup;
 			children = (
+				D33BDA172033EF150087FCB8 /* tessdata */,
 				D35D24792012D54F0008817F /* NavigateMe */,
 				D35D24782012D54F0008817F /* Products */,
 				D303687A201A52EF00AB16E3 /* Frameworks */,
+				959C51052DA60BA684FD4C1E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +225,8 @@
 		D35D248C2012D9230008817F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D33BDA862033F28A0087FCB8 /* tessdata */,
+				D3EEB6E92031B0F4003AB471 /* FloorPlan_E */,
 				D35D247A2012D54F0008817F /* AppDelegate.swift */,
 				D35D24812012D54F0008817F /* Assets.xcassets */,
 				D35D24832012D54F0008817F /* LaunchScreen.storyboard */,
@@ -169,6 +270,18 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		D3EEB6E92031B0F4003AB471 /* FloorPlan_E */ = {
+			isa = PBXGroup;
+			children = (
+				D3EEB6EA2031B0F4003AB471 /* E0.png */,
+				D3EEB6EB2031B0F4003AB471 /* E00.png */,
+				D33BD9B72033E6360087FCB8 /* E1.png */,
+				D3EEB6ED2031B0F4003AB471 /* E2.png */,
+				D3EEB6EE2031B0F4003AB471 /* E3.png */,
+			);
+			path = FloorPlan_E;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -176,9 +289,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D35D24892012D54F0008817F /* Build configuration list for PBXNativeTarget "NavigateMe" */;
 			buildPhases = (
+				0A5999BBF59FF9DB08A8A712 /* [CP] Check Pods Manifest.lock */,
 				D35D24732012D54F0008817F /* Sources */,
 				D35D24742012D54F0008817F /* Frameworks */,
 				D35D24752012D54F0008817F /* Resources */,
+				D3F558532032C89A009B5B6B /* Embed Frameworks */,
+				994AD30EB8F63E44987B2583 /* [CP] Embed Pods Frameworks */,
+				7ECE57BE5E4AEBAD1CB767F8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -204,10 +321,10 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -236,6 +353,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EEB6EF2031B739003AB471 /* E0.png in Resources */,
+				D3EEB6F02031B739003AB471 /* E00.png in Resources */,
+				D33BDA872033F28A0087FCB8 /* tessdata in Resources */,
+				D3EEB6F22031B739003AB471 /* E2.png in Resources */,
+				D33BD9B82033E6360087FCB8 /* E1.png in Resources */,
+				D3EEB6F32031B739003AB471 /* E3.png in Resources */,
 				D35D24852012D54F0008817F /* LaunchScreen.storyboard in Resources */,
 				D35D24822012D54F0008817F /* Assets.xcassets in Resources */,
 				D35D24802012D54F0008817F /* Main.storyboard in Resources */,
@@ -243,6 +366,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0A5999BBF59FF9DB08A8A712 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NavigateMe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7ECE57BE5E4AEBAD1CB767F8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NavigateMe/Pods-NavigateMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		994AD30EB8F63E44987B2583 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NavigateMe/Pods-NavigateMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/TesseractOCRiOS/TesseractOCR.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TesseractOCR.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NavigateMe/Pods-NavigateMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D35D24732012D54F0008817F /* Sources */ = {
@@ -400,10 +577,13 @@
 		};
 		D35D248A2012D54F0008817F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B0DF4C0823F92A53A8DF29D0 /* Pods-NavigateMe.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C596PMQ723;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NavigateMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.hs-fulda.informatik.mobApp.NavigateMe";
@@ -415,10 +595,13 @@
 		};
 		D35D248B2012D54F0008817F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3C0B5A33039EB4CE4E09413 /* Pods-NavigateMe.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C596PMQ723;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NavigateMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.hs-fulda.informatik.mobApp.NavigateMe";
