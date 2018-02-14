@@ -31,21 +31,88 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @IBAction func searchFreeRaums(_ sender: UIButton) {
+
+        print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
+        
+        app.search = searchDateTime.date
+        app.searchFreeRaums()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        guard let floors = self.freeRaums["46(E)"] else {
+            
+            return 0
+        }
+        
+//        return floors.count
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GebCell", for: indexPath) as! GebCollectionViewCell
+        
+        guard let floors = self.freeRaums["46(E)"] else {
+            
+            return cell
+        }
+        
+//        for (index, floor) in floors.keys.enumerated() {
+//
+//            if indexPath.item == index {
+//
+//                cell.gebLabel.text = "Geb 46(E): Floor \(floor)"
+//
+//                cell.freeRaumLabel.text = floors[floor]!.reduce("", { (result, raum) in
+//
+//                    return result + raum + "\n"
+//                })
+//
+//                break
+//            }
+//        }
+        
+        cell.gebLabel.text = "Geb 46(E): Floor 1"
         
         // detect text on image and print that text on console
         let floorPlanImage = CIImage(contentsOf: Bundle.main.url(forResource: "E1", withExtension: "png")!)!
+        
+        let floorPlanUIImage = UIImage(ciImage: floorPlanImage)
+        
+        // In UI Collection View Cell, start from (0,0)
+        cell.floorPlanView.frame = CGRect(x: CGFloat(7.5), y: cell.floorPlanView.frame.origin.y, width: floorPlanUIImage.size.width, height: floorPlanUIImage.size.height)
+        cell.floorPlanView.image = floorPlanUIImage
+        
         let imageContext = CIContext()
         
         let textDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeText, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
         
-        let features = textDetectorInFloorPlan.features(in: floorPlanImage)
+        //        let rectDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeRectangle, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
+        
+        let textFeatures = textDetectorInFloorPlan.features(in: floorPlanImage)
+        //        let rectFeatures = rectDetectorInFloorPlan.features(in: floorPlanImage)
+        
+        //        print("Detected Rectangles: \(rectFeatures)\n")
+        
         var i = 0
         
-        for feature in features {
+        //        for rectIndex in rectFeatures.indices {
+        
+        //            let rectFeature = rectFeatures[rectIndex] as! CIRectangleFeature
+        
+        for textIndex in textFeatures.indices {
+            
+            let textFeature = textFeatures[textIndex] as! CITextFeature
+            
+            //                if !rectFeature.bounds.contains(textFeature.bounds) {
+            //
+            //                    continue
+            //                }
             
             i += 1
             
-            let textFeature = feature as! CITextFeature
+            //                print("Rectangle \(i): \(rectFeature.bounds)\n")
             
             print("Before Rect Increase: \(textFeature.bounds)\n")
             let textRect = textFeature.bounds.insetBy(dx: CGFloat(-5), dy: CGFloat(-5))
@@ -64,53 +131,39 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let image = UIImage(cgImage: textCGImage).scaleImage(640)!
             
             if let tesseract = G8Tesseract(language: "eng") {
+                
                 tesseract.engineMode = .tesseractCubeCombined
                 tesseract.pageSegmentationMode = .auto
                 tesseract.image = image.g8_blackAndWhite()
                 tesseract.recognize()
-                print("Image \(i): OCR Result: \(tesseract.recognizedText)\n")
+                let ocrText = tesseract.recognizedText.trimmingCharacters(in: .whitespacesAndNewlines)
+                print("Image \(i): OCR Result: " + ocrText + "\n")
+                
+                print("Rect Origin (X,Y): (\(textRect.origin.x), \(textRect.origin.y))\n")
+                print("Rect Min (X,Y): (\(textRect.minX), \(textRect.minY))\n")
+                print("Rect Max (X,Y): (\(textRect.maxX), \(textRect.maxY))\n")
+                
+                let textButton = UIButton(type: .system)
+                
+                textButton.backgroundColor = UIColor.green
+                textButton.setTitle(ocrText, for: .normal)
+                textButton.titleLabel!.font = textButton.titleLabel!.font.withSize(CGFloat(30))
+                textButton.setTitleColor(UIColor.black, for: .normal)
+                
+                textButton.frame = CGRect(x: textRect.origin.x, y: cell.floorPlanView.frame.height - textRect.maxY, width: textRect.width, height: textRect.height)
+                
+                cell.floorPlanView.addSubview(textButton)
+                
+                //                    let roomNumberView = UIImageView(image: UIImage(cgImage: textCGImage))
+                //
+                //                    roomNumberView.frame = CGRect(x: textRect.origin.x, y: cell.floorPlanView.frame.height - textRect.maxY, width: textRect.width, height: textRect.height)
+                //
+                //                    cell.floorPlanView.addSubview(roomNumberView)
             }
-        }
-        
-        print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
-        
-//        app.search = searchDateTime.date
-//        app.searchFreeRaums()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        guard let floors = self.freeRaums["46(E)"] else {
             
-            return 0
+            //                break
         }
-        
-        return floors.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GebCell", for: indexPath) as! GebCollectionViewCell
-        
-        guard let floors = self.freeRaums["46(E)"] else {
-            
-            return cell
-        }
-        
-        for (index, floor) in floors.keys.enumerated() {
-            
-            if indexPath.item == index {
-                
-                cell.gebLabel.text = "Geb 46(E): Floor \(floor)"
-                
-                cell.freeRaumLabel.text = floors[floor]!.reduce("", { (result, raum) in
-                    
-                    return result + raum + "\n"
-                })
-                
-                break
-            }
-        }
+        //        }
         
         return cell
     }
