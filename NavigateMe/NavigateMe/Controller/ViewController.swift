@@ -132,12 +132,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 // doing button transformation in device coordinate system
                 textButton.frame = textButton.frame
-                    .applying(affineTranslationTransform)
-                    .applying(affineScaleTransform)
+                                                .applying(affineTranslationTransform)
+                                                .applying(affineScaleTransform)
                 
-//                textButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
+                textButton.frame.origin.x += (cell.floorPlanView.frame.origin.x + cell.frame.origin.x + collectionView.frame.origin.x)
+                textButton.frame.origin.y += (cell.floorPlanView.frame.origin.y + cell.frame.origin.y + collectionView.frame.origin.y)
                 
-                cell.floorPlanView.addSubview(textButton)
+                textButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
+                
+                view.addSubview(textButton)
             }
         }
         
@@ -198,6 +201,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.abortMessageLabel.isHidden = false
             self.abortMessageLabel.text = "Process is aborted.\nReason: " + message
         }
+    }
+    
+    @IBAction func navigateMeInThisRaum(_ sender: UIButton) {
+        
+        print("\nHello Mahbub, I am here ...\n")
+        
+        let alert = UIAlertController(title: "Navigate Me", message: "Hello Mahbub, I am here ...", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
