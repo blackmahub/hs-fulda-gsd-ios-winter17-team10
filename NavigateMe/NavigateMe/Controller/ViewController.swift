@@ -76,61 +76,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.gebLabel.text = "Geb 46(E): Floor 1"
         
         // detect text on image and print that text on console
-        let floorPlanImage = CIImage(contentsOf: Bundle.main.url(forResource: "E1", withExtension: "png")!)!
+        var floorPlanCIImage = CIImage(contentsOf: Bundle.main.url(forResource: "E1", withExtension: "png")!)!
         
-        let floorPlanUIImage = UIImage(ciImage: floorPlanImage)
-        
-        // In UI Collection View Cell, start from (0,0)
-        cell.floorPlanView.frame = CGRect(x: CGFloat(7.5), y: cell.floorPlanView.frame.origin.y, width: floorPlanUIImage.size.width, height: floorPlanUIImage.size.height)
-        cell.floorPlanView.image = floorPlanUIImage
+        let orginalFloorPlanWidth = floorPlanCIImage.extent.width
+        let orginalFloorPlanHeight = floorPlanCIImage.extent.height
         
         let imageContext = CIContext()
-        
         let textDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeText, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
+        let textFeatures = textDetectorInFloorPlan.features(in: floorPlanCIImage)
         
-        //        let rectDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeRectangle, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
-        
-        let textFeatures = textDetectorInFloorPlan.features(in: floorPlanImage)
-        //        let rectFeatures = rectDetectorInFloorPlan.features(in: floorPlanImage)
-        
-        //        print("Detected Rectangles: \(rectFeatures)\n")
+        // doing image transformation in device coordinate system
+        let scaleX = cell.floorPlanView.frame.width / orginalFloorPlanWidth
+        let scaleY = cell.floorPlanView.frame.height / orginalFloorPlanHeight
+        let affineScaleTransform = CGAffineTransform(scaleX: scaleX, y: scaleY)
         
         var i = 0
-        
-        //        for rectIndex in rectFeatures.indices {
-        
-        //            let rectFeature = rectFeatures[rectIndex] as! CIRectangleFeature
         
         for textIndex in textFeatures.indices {
             
             let textFeature = textFeatures[textIndex] as! CITextFeature
             
-            //                if !rectFeature.bounds.contains(textFeature.bounds) {
-            //
-            //                    continue
-            //                }
-            
             i += 1
-            
-            //                print("Rectangle \(i): \(rectFeature.bounds)\n")
-            
+        
             print("Before Rect Increase: \(textFeature.bounds)\n")
             let textRect = textFeature.bounds.insetBy(dx: CGFloat(-5), dy: CGFloat(-5))
             print("After Rect Increase: \(textRect)\n")
             
-            let textCGImage = imageContext.createCGImage(floorPlanImage, from: textRect)!
-            
-            do {
-                
-                try imageContext.writePNGRepresentation(of: CIImage(cgImage: textCGImage), to: URL(fileURLWithPath: "/Users/mahbub/Pictures/Raum-\(i).png"), format: kCIFormatRGBA8, colorSpace: floorPlanImage.colorSpace!, options: [:])
-                
-            } catch let err {
-                print("\nERROR: " + err.localizedDescription + "\n")
-            }
-            
-            let image = UIImage(cgImage: textCGImage).scaleImage(640)!
-            
             if let tesseract = G8Tesseract(language: "eng") {
+                
+                let textCGImage = imageContext.createCGImage(floorPlanCIImage, from: textRect)!
+                let image = UIImage(cgImage: textCGImage).scaleImage(640)!
                 
                 tesseract.engineMode = .tesseractCubeCombined
                 tesseract.pageSegmentationMode = .auto
@@ -143,27 +118,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 print("Rect Min (X,Y): (\(textRect.minX), \(textRect.minY))\n")
                 print("Rect Max (X,Y): (\(textRect.maxX), \(textRect.maxY))\n")
                 
-                let textButton = UIButton(type: .system)
+                let buttonOrigin = CGPoint(x: textRect.origin.x, y: textRect.maxY)
+                let translationX = CGFloat(0)
+                let translationY = orginalFloorPlanHeight - (CGFloat(2) * buttonOrigin.y)
+                let affineTranslationTransform = CGAffineTransform(translationX: translationX, y: translationY)
+                
+                let textButton = UIButton(frame: CGRect(origin: buttonOrigin, size: textRect.size))
                 
                 textButton.backgroundColor = UIColor.green
                 textButton.setTitle(ocrText, for: .normal)
                 textButton.titleLabel!.font = textButton.titleLabel!.font.withSize(CGFloat(30))
                 textButton.setTitleColor(UIColor.black, for: .normal)
                 
-                textButton.frame = CGRect(x: textRect.origin.x, y: cell.floorPlanView.frame.height - textRect.maxY, width: textRect.width, height: textRect.height)
+                // doing button transformation in device coordinate system
+                textButton.frame = textButton.frame
+                    .applying(affineTranslationTransform)
+                    .applying(affineScaleTransform)
+                
+//                textButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
                 
                 cell.floorPlanView.addSubview(textButton)
-                
-                //                    let roomNumberView = UIImageView(image: UIImage(cgImage: textCGImage))
-                //
-                //                    roomNumberView.frame = CGRect(x: textRect.origin.x, y: cell.floorPlanView.frame.height - textRect.maxY, width: textRect.width, height: textRect.height)
-                //
-                //                    cell.floorPlanView.addSubview(roomNumberView)
             }
-            
-            //                break
         }
-        //        }
+        
+        floorPlanCIImage = floorPlanCIImage.transformed(by: affineScaleTransform)
+        cell.floorPlanView.image = UIImage(ciImage: floorPlanCIImage)
         
         return cell
     }
