@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import CoreImage
-import TesseractOCR
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AppEngineDelegate {
     
@@ -17,7 +15,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var freeRaums = [String : [Int : [String]]]()
     
     @IBOutlet weak var searchDateTime: UIDatePicker!
-    @IBOutlet weak var abortMessageLabel: UILabel!
     @IBOutlet weak var gebCollectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -75,77 +72,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         cell.gebLabel.text = "Geb 46(E): Floor 1"
         
-        // detect text on image and print that text on console
-        var floorPlanCIImage = CIImage(contentsOf: Bundle.main.url(forResource: "E1", withExtension: "png")!)!
+        let floorPlan = ImageProcessor.processImage(floor: 1, freeRaums: [129, 139], imageViewFrame: cell.floorPlanView.frame, parentViewFrames: cell.frame, collectionView.frame)
         
-        let orginalFloorPlanWidth = floorPlanCIImage.extent.width
-        let orginalFloorPlanHeight = floorPlanCIImage.extent.height
+        cell.floorPlanView.image = UIImage(ciImage: floorPlan.image)
         
-        let imageContext = CIContext()
-        let textDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeText, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
-        let textFeatures = textDetectorInFloorPlan.features(in: floorPlanCIImage)
-        
-        // doing image transformation in device coordinate system
-        let scaleX = cell.floorPlanView.frame.width / orginalFloorPlanWidth
-        let scaleY = cell.floorPlanView.frame.height / orginalFloorPlanHeight
-        let affineScaleTransform = CGAffineTransform(scaleX: scaleX, y: scaleY)
-        
-        var i = 0
-        
-        for textIndex in textFeatures.indices {
+        for buttonFrame in floorPlan.buttonFrames {
             
-            let textFeature = textFeatures[textIndex] as! CITextFeature
+            let raumButton = UIButton(frame: buttonFrame.value)
             
-            i += 1
-        
-            print("Before Rect Increase: \(textFeature.bounds)\n")
-            let textRect = textFeature.bounds.insetBy(dx: CGFloat(-5), dy: CGFloat(-5))
-            print("After Rect Increase: \(textRect)\n")
+            raumButton.backgroundColor = UIColor.green
+            raumButton.setTitle("\(buttonFrame.key)", for: .normal)
+            raumButton.titleLabel!.font = raumButton.titleLabel!.font.withSize(CGFloat(30))
+            raumButton.setTitleColor(UIColor.black, for: .normal)
+            raumButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
             
-            if let tesseract = G8Tesseract(language: "eng") {
-                
-                let textCGImage = imageContext.createCGImage(floorPlanCIImage, from: textRect)!
-                let image = UIImage(cgImage: textCGImage).scaleImage(640)!
-                
-                tesseract.engineMode = .tesseractCubeCombined
-                tesseract.pageSegmentationMode = .auto
-                tesseract.image = image.g8_blackAndWhite()
-                tesseract.recognize()
-                let ocrText = tesseract.recognizedText.trimmingCharacters(in: .whitespacesAndNewlines)
-                print("Image \(i): OCR Result: " + ocrText + "\n")
-                
-                print("Rect Origin (X,Y): (\(textRect.origin.x), \(textRect.origin.y))\n")
-                print("Rect Min (X,Y): (\(textRect.minX), \(textRect.minY))\n")
-                print("Rect Max (X,Y): (\(textRect.maxX), \(textRect.maxY))\n")
-                
-                let buttonOrigin = CGPoint(x: textRect.origin.x, y: textRect.maxY)
-                let translationX = CGFloat(0)
-                let translationY = orginalFloorPlanHeight - (CGFloat(2) * buttonOrigin.y)
-                let affineTranslationTransform = CGAffineTransform(translationX: translationX, y: translationY)
-                
-                let textButton = UIButton(frame: CGRect(origin: buttonOrigin, size: textRect.size))
-                
-                textButton.backgroundColor = UIColor.green
-                textButton.setTitle(ocrText, for: .normal)
-                textButton.titleLabel!.font = textButton.titleLabel!.font.withSize(CGFloat(30))
-                textButton.setTitleColor(UIColor.black, for: .normal)
-                
-                // doing button transformation in device coordinate system
-                textButton.frame = textButton.frame
-                                                .applying(affineTranslationTransform)
-                                                .applying(affineScaleTransform)
-                
-                textButton.frame.origin.x += (cell.floorPlanView.frame.origin.x + cell.frame.origin.x + collectionView.frame.origin.x)
-                textButton.frame.origin.y += (cell.floorPlanView.frame.origin.y + cell.frame.origin.y + collectionView.frame.origin.y)
-                
-                textButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
-                
-                view.addSubview(textButton)
-            }
+            self.view.addSubview(raumButton)
         }
-        
-        floorPlanCIImage = floorPlanCIImage.transformed(by: affineScaleTransform)
-        cell.floorPlanView.image = UIImage(ciImage: floorPlanCIImage)
         
         return cell
     }
@@ -181,8 +123,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             print("Free Raums Dictionary:")
             print(self.freeRaums.description)
-        
-            self.abortMessageLabel.isHidden = true
             
             self.gebCollectionView.isHidden = false
             self.gebCollectionView.reloadData()
@@ -198,8 +138,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             self.gebCollectionView.isHidden = true
             
-            self.abortMessageLabel.isHidden = false
-            self.abortMessageLabel.text = "Process is aborted.\nReason: " + message
+            let abortAlert = UIAlertController(title: "Process is aborted.", message: "Reason: " + message, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            abortAlert.addAction(cancelAction)
+            self.present(abortAlert, animated: true)
         }
     }
     
@@ -208,8 +150,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print("\nHello Mahbub, I am here ...\n")
         
         let alert = UIAlertController(title: "Navigate Me", message: "Hello Mahbub, I am here ...", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
     

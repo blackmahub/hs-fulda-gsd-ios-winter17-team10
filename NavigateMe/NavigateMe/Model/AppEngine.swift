@@ -185,7 +185,8 @@ class AppEngine: RESTServiceDelegate {
         
         guard !data.isEmpty else {
             
-            self.delegate?.processDidAbort(reason: "No Geb Plan is found from System2Teach.")
+            print("No Geb Plan is found from System2Teach.")
+            self.delegate?.processDidAbort(reason: "University is Closed.")
             return
         }
         
