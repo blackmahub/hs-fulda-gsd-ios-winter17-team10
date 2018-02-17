@@ -31,6 +31,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
         
+        app.gebs = ["46(E)."]
         app.search = searchDateTime.date
         app.searchFreeRaums()
     }
@@ -155,26 +156,4 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.present(alert, animated: true, completion: nil)
     }
     
-}
-
-extension UIImage {
-    func scaleImage(_ maxDimension: CGFloat) -> UIImage? {
-        
-        var scaledSize = CGSize(width: maxDimension, height: maxDimension)
-        
-        if size.width > size.height {
-            let scaleFactor = size.height / size.width
-            scaledSize.height = scaledSize.width * scaleFactor
-        } else {
-            let scaleFactor = size.width / size.height
-            scaledSize.width = scaledSize.height * scaleFactor
-        }
-        
-        UIGraphicsBeginImageContext(scaledSize)
-        draw(in: CGRect(origin: .zero, size: scaledSize))
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return scaledImage
-    }
 }

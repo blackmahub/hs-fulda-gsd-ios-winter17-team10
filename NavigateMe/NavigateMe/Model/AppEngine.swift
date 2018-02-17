@@ -27,17 +27,21 @@ class AppEngine: RESTServiceDelegate {
     // search date time
     var search: Date?
     
+    // gebäude list
+    var gebs: [String]?
+    
     var delegate: AppEngineDelegate?
     
     init() {
         
         previousSearch = nil
         search = nil
+        gebs = nil
         delegate = nil
         
         // static mapping
         // floor mapping with raums
-        let floor2Raums = [0: [6, 9, 12], 1 : [105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 336]]
+        let floor2Raums = [0: [6, 12], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 336]]
         
         var raums = [Raum](), floors = [Floor]()
         
@@ -66,7 +70,7 @@ class AppEngine: RESTServiceDelegate {
         print("Engine starting ...")
         
         // call RESTful API to fetch geb plan from S2T
-        s2TGebPlan.get(of: nil, on: self.search!)
+        s2TGebPlan.get(of: self.gebs!, on: self.search!)
     }
     
     // refresh decision tree
@@ -81,7 +85,7 @@ class AppEngine: RESTServiceDelegate {
                 
                 for raumIndex in department.gebs[gebIndex].floors[floorIndex].raums.indices {
                     
-                    department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(Utils.defaultFreeDuration())
+                    department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(Date.defaultFreeDuration())
                     department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.removeAll()
                 }
             }
@@ -123,7 +127,7 @@ class AppEngine: RESTServiceDelegate {
                     if department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.count == 0 {
                         
                         // raum status is free
-                        department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(Utils.freeDurationTillUniversityClose(from: self.search!))
+                        department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(self.search!.freeDurationTillUniversityClose())
                         
                         continue
                     }
@@ -150,7 +154,7 @@ class AppEngine: RESTServiceDelegate {
                         if beforeBeginns.count == 0 {
                             
                             // raum status is free
-                            department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(Utils.freeDurationTillUniversityClose(from: self.search!))
+                            department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(self.search!.freeDurationTillUniversityClose())
                         
                         } else {
                             
@@ -199,16 +203,16 @@ class AppEngine: RESTServiceDelegate {
         
         data.forEach { gebPlan in
             
-            print("Raum: " + gebPlan.Raum)
-            print("Beginn: \(Utils.millisecondToDate(Double(gebPlan.Beginn)))")
-            print("Ende: \(Utils.millisecondToDate(Double(gebPlan.Ende)))\n")
-            
             gebRaums = gebPlan.Raum.split(separator: "/")
             
             raumFromS2T = String(gebRaums[0])
             
-            beginn = Utils.millisecondToDate(Double(gebPlan.Beginn))
-            ende = Utils.millisecondToDate(Double(gebPlan.Ende))
+            beginn = Date.millisecondToDate(Double(gebPlan.Beginn))
+            ende = Date.millisecondToDate(Double(gebPlan.Ende))
+            
+            print("Raum: " + gebPlan.Raum)
+            print("Beginn: \(beginn)")
+            print("Ende: \(ende)\n")
             
             if mapWithS2T.keys.contains(raumFromS2T!) {
             
@@ -276,13 +280,13 @@ class AppEngine: RESTServiceDelegate {
         
         print("In App Engine")
         
-        guard Utils.withinUniversityTime(self.search!) else {
+        guard self.search!.isWithinUniversityTime() else {
             
             self.delegate?.processDidAbort(reason: "Search date time is need to be with in university open and close times.")
             return
         }
         
-        if previousSearch == nil || (previousSearch != nil && !Utils.onlyDateEqual(self.search!, to: self.previousSearch!)) {
+        if previousSearch == nil || (previousSearch != nil && !self.search!.onlyDateEqual(to: self.previousSearch!)) {
         
             switch self.isStarted {
                 
@@ -298,7 +302,7 @@ class AppEngine: RESTServiceDelegate {
         }
         
         // do nothing, if search time == last searched time
-        guard !Utils.onlyTimeEqual(self.search!, to: self.previousSearch!) else {
+        guard !self.search!.onlyTimeEqual(to: self.previousSearch!) else {
             
             print("do nothing, if search time == last searched time")
             return
@@ -344,7 +348,7 @@ class AppEngine: RESTServiceDelegate {
                             freeTimeInterval = 0.0
                     }
                     
-                    return FreeRaumDTO(geb: geb.name, floor: floor.number, raum: raum.number, duration: Utils.secondToDateString(freeTimeInterval, format: "HH:mm"))
+                    return FreeRaumDTO(geb: geb.name, floor: floor.number, raum: raum.number, duration: Date(timeIntervalSince1970: freeTimeInterval).string(format: "HH:mm"))
                 }
             }
         }

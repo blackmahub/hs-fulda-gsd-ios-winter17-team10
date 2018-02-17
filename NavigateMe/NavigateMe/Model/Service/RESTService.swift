@@ -10,8 +10,9 @@ import Foundation
 
 class RESTService {
     
-    let networkProtocol = "https"
-    let host = "www.system2teach.de"
+    static private let networkProtocol = "http"
+    static private let host = "193.174.26.57"
+    static private let port = 8080
     
     var delegate: RESTServiceDelegate? = nil
     
@@ -21,8 +22,9 @@ class RESTService {
         
         var components = URLComponents()
         
-        components.scheme = self.networkProtocol
-        components.host = self.host
+        components.scheme = RESTService.networkProtocol
+        components.host = RESTService.host
+        components.port = RESTService.port
         components.path = path
         
         if let query = query {
