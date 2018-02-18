@@ -12,7 +12,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let app = AppEngine()
     
-    var freeRaums = [String : [Int : [String]]]()
+    var freeRaums = [String : [Int : [(raum: Int, duration: String)]]]()
     
     @IBOutlet weak var searchDateTime: UIDatePicker!
     @IBOutlet weak var gebCollectionView: UICollectionView!
@@ -71,9 +71,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //            }
 //        }
         
+        var freeRaumsOfFloor1 = [Int]()
+        
+        for floor in floors {
+            
+            if 1 == floor.key {
+                
+                freeRaumsOfFloor1 = floor.value.map({ $0.raum })
+                break
+            }
+        }
+        
+        print("\nFree Raums Array from Free Raums Dictionary:\n")
+        print("\(freeRaumsOfFloor1)\n")
+        
         cell.gebLabel.text = "Geb 46(E): Floor 1"
         
-        let floorPlan = ImageProcessor.processImage(floor: 1, freeRaums: [129, 139], imageViewFrame: cell.floorPlanView.frame, parentViewFrames: cell.frame, collectionView.frame)
+        
+        let floorPlan = ImageProcessor.processImage(floor: 1, freeRaums: freeRaumsOfFloor1, imageViewFrame: cell.floorPlanView.frame, parentViewFrames: cell.frame, collectionView.frame)
         
         cell.floorPlanView.image = UIImage(ciImage: floorPlan.image)
         
@@ -96,7 +111,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func processDidComplete(then dto: [FreeRaumDTO]) {
         
         // reset free raums dictionary
-        self.freeRaums = [String : [Int : [String]]]()
+        self.freeRaums = [String : [Int : [(raum: Int, duration: String)]]]()
         
         DispatchQueue.main.async {
             
@@ -111,15 +126,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 if !self.freeRaums.keys.contains(freeRaum.geb) {
                     
-                    self.freeRaums[freeRaum.geb] = [Int : [String]]()
+                    self.freeRaums[freeRaum.geb] = [Int : [(raum: Int, duration: String)]]()
                 }
                     
                 if !self.freeRaums[freeRaum.geb]!.keys.contains(freeRaum.floor) {
-                    
-                    self.freeRaums[freeRaum.geb]!.updateValue([String](), forKey: freeRaum.floor)
+                
+                    self.freeRaums[freeRaum.geb]![freeRaum.floor] = [(raum: Int, duration: String)]()
                 }
                 
-                self.freeRaums[freeRaum.geb]![freeRaum.floor] = self.freeRaums[freeRaum.geb]![freeRaum.floor]! + ["Raum: \(freeRaum.raum) for next " + freeRaum.duration]
+                self.freeRaums[freeRaum.geb]![freeRaum.floor]! += [(freeRaum.raum, freeRaum.duration)]
             }
             
             print("Free Raums Dictionary:")

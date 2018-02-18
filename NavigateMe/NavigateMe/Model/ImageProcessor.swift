@@ -36,9 +36,9 @@ class ImageProcessor {
             
             i += 1
             
-            print("Before Rect Increase: \(textFeature.bounds)\n")
+            print("Text Rect \(i): Before Rect Increase: \(textFeature.bounds)\n")
             let textRect = textFeature.bounds.insetBy(dx: CGFloat(-5), dy: CGFloat(-5))
-            print("After Rect Increase: \(textRect)\n")
+            print("Text Rect \(i): After Rect Increase: \(textRect)\n")
             
             if let tesseract = G8Tesseract(language: "eng") {
                 
@@ -58,9 +58,9 @@ class ImageProcessor {
                     continue
                 }
                 
-                print("Rect Origin (X,Y): (\(textRect.origin.x), \(textRect.origin.y))\n")
-                print("Rect Min (X,Y): (\(textRect.minX), \(textRect.minY))\n")
-                print("Rect Max (X,Y): (\(textRect.maxX), \(textRect.maxY))\n")
+                print("Image \(i): Rect Origin (X,Y): (\(textRect.origin.x), \(textRect.origin.y))\n")
+                print("Image \(i): Rect Min (X,Y): (\(textRect.minX), \(textRect.minY))\n")
+                print("Image \(i): Rect Max (X,Y): (\(textRect.maxX), \(textRect.maxY))\n")
                 
                 let buttonOrigin = CGPoint(x: textRect.origin.x, y: textRect.maxY)
                 let translationX = CGFloat(0)

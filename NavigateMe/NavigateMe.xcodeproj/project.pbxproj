@@ -21,11 +21,10 @@
 		D33BD9BA2033EBEA0087FCB8 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D33BD9B92033EBE90087FCB8 /* libstdc++.tbd */; };
 		D33BD9BC2033EBF20087FCB8 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33BD9BB2033EBF20087FCB8 /* CoreImage.framework */; };
 		D33BD9BD2033EBF80087FCB8 /* TesseractOCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33BD9BE2033EBF80087FCB8 /* TesseractOCR.framework */; };
-		D33BDA8920365D230087FCB8 /* E1-X.png in Resources */ = {isa = PBXBuildFile; fileRef = D33BDA8820365D230087FCB8 /* E1-X.png */; };
 		D33BDA8D203664A50087FCB8 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = D33BDA8C203664A40087FCB8 /* tessdata */; };
 		D33BDA8F2036828E0087FCB8 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33BDA8E2036828E0087FCB8 /* ImageProcessor.swift */; };
 		D33BDA922038516E0087FCB8 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33BDA912038516E0087FCB8 /* UIImageExtension.swift */; };
-		D33BDA94203856E10087FCB8 /* E1.png in Resources */ = {isa = PBXBuildFile; fileRef = D33BDA93203856E00087FCB8 /* E1.png */; };
+		D33BDA9E2039951D0087FCB8 /* E1.png in Resources */ = {isa = PBXBuildFile; fileRef = D33BDA9D2039951D0087FCB8 /* E1.png */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
 		D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */; };
 		D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136920136F1800D9DCC9 /* S2TGebPlan .swift */; };
@@ -73,11 +72,10 @@
 		D33BD9B92033EBE90087FCB8 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		D33BD9BB2033EBF20087FCB8 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D33BD9BE2033EBF80087FCB8 /* TesseractOCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TesseractOCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D33BDA8820365D230087FCB8 /* E1-X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "E1-X.png"; sourceTree = "<group>"; };
 		D33BDA8C203664A40087FCB8 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		D33BDA8E2036828E0087FCB8 /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		D33BDA912038516E0087FCB8 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
-		D33BDA93203856E00087FCB8 /* E1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E1.png; sourceTree = "<group>"; };
+		D33BDA9D2039951D0087FCB8 /* E1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E1.png; sourceTree = "<group>"; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
 		D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTServiceDelegate.swift; sourceTree = "<group>"; };
 		D351136920136F1800D9DCC9 /* S2TGebPlan .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "S2TGebPlan .swift"; sourceTree = "<group>"; };
@@ -241,8 +239,7 @@
 			children = (
 				D3EEB6EA2031B0F4003AB471 /* E0.png */,
 				D3EEB6EB2031B0F4003AB471 /* E00.png */,
-				D33BDA8820365D230087FCB8 /* E1-X.png */,
-				D33BDA93203856E00087FCB8 /* E1.png */,
+				D33BDA9D2039951D0087FCB8 /* E1.png */,
 				D3EEB6ED2031B0F4003AB471 /* E2.png */,
 				D3EEB6EE2031B0F4003AB471 /* E3.png */,
 			);
@@ -324,9 +321,8 @@
 				D3EEB6F02031B739003AB471 /* E00.png in Resources */,
 				D33BDA8D203664A50087FCB8 /* tessdata in Resources */,
 				D3EEB6F22031B739003AB471 /* E2.png in Resources */,
+				D33BDA9E2039951D0087FCB8 /* E1.png in Resources */,
 				D3EEB6F32031B739003AB471 /* E3.png in Resources */,
-				D33BDA94203856E10087FCB8 /* E1.png in Resources */,
-				D33BDA8920365D230087FCB8 /* E1-X.png in Resources */,
 				D35D24852012D54F0008817F /* LaunchScreen.storyboard in Resources */,
 				D35D24822012D54F0008817F /* Assets.xcassets in Resources */,
 				D35D24802012D54F0008817F /* Main.storyboard in Resources */,

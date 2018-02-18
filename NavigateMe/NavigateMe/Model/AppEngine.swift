@@ -129,8 +129,11 @@ class AppEngine: RESTServiceDelegate {
                         // raum status is free
                         department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(self.search!.freeDurationTillUniversityClose())
                         
+                        print()
                         continue
                     }
+                    
+                    let scheduleCount = department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.count
                     
                     // filter schedules where search date time are not within beginn and ende range
                     freeSchedules = department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.filter { schedule in
@@ -138,7 +141,9 @@ class AppEngine: RESTServiceDelegate {
                         return !((schedule.beginn == self.search! || schedule.beginn < self.search!) && self.search! < schedule.ende)
                     }
                     
-                    if freeSchedules.count == 0 {
+                    print("Free Schedules: \(freeSchedules)")
+                    
+                    if freeSchedules.count == scheduleCount - 1 {
                     
                         // raum status is occupied
                         department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .OCCUPIED
