@@ -36,6 +36,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         app.searchFreeRaums()
     }
     
+    @IBAction func navigateMeInThisRaum(_ sender: UIButton) {
+        
+        let freeRaum = freeRaums["46(E)"]![1]!.filter({ $0.raum == Int(sender.currentTitle!) }).first!
+        let title = "Raum: \(freeRaum.raum)"
+        let message = "Free for next " + freeRaum.duration
+        
+        let navigationConfirmAlert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let navigateAction = UIAlertAction(title: "Navigate Me", style: .default) { alertAction in
+            
+            print("Hello, please navigate me to " + title + ".\n")
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        navigationConfirmAlert.addAction(navigateAction)
+        navigationConfirmAlert.addAction(cancelAction)
+        
+        self.present(navigationConfirmAlert, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let floors = self.freeRaums["46(E)"] else {
@@ -159,16 +179,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             abortAlert.addAction(cancelAction)
             self.present(abortAlert, animated: true)
         }
-    }
-    
-    @IBAction func navigateMeInThisRaum(_ sender: UIButton) {
-        
-        print("\nHello Mahbub, I am here ...\n")
-        
-        let alert = UIAlertController(title: "Navigate Me", message: "Hello Mahbub, I am here ...", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
     }
     
 }
