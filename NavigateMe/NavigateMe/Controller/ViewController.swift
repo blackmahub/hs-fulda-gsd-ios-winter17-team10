@@ -42,7 +42,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let title = "Raum: \(freeRaum.raum)"
         let message = "Free for next " + freeRaum.duration
         
-        let navigationConfirmAlert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let navigationConfirmAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let navigateAction = UIAlertAction(title: "Navigate Me", style: .default) { alertAction in
             
