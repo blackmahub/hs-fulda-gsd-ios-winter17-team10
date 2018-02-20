@@ -41,7 +41,8 @@ class AppEngine: RESTServiceDelegate {
         
         // static mapping
         // floor mapping with raums
-        let floor2Raums = [0: [6, 12], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 336]]
+        // TODO: fix missmatch with floor plan image
+        let floor2Raums = [0: [6, 9, 12, 29, 32, 35, 36], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 334, 336]]
         
         var raums = [Raum](), floors = [Floor]()
         

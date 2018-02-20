@@ -12,7 +12,37 @@ import TesseractOCR
 
 class ImageProcessor {
     
-    static func processImage(floor: Int, freeRaums: [Int], imageViewFrame: CGRect, parentViewFrames: CGRect...) -> (image: CIImage, buttonFrames: [Int : CGRect]) {
+    static var imageViewFrame: CGRect? = nil
+    static var parentViewFrames: [CGRect]? = nil
+    
+    // [<button-tag> : (<image-frame>, [<button-title> : <button-frame>])]
+    // [<geb + floor + raum>  : (floor-image-frame, [<raum-title> : <raum-title-frame>])]
+    static var floorPlans = [Int : (image: CIImage, buttonFrames: [Int : CGRect])]()
+    
+    static func processImage() {
+        
+        guard imageViewFrame != nil else {
+            
+            print("\nImage Processor Error: Image view frame is not defined.\n")
+            return
+        }
+        
+        // geb int value = geb number + ascii of geb uppercase letter
+        let gebNummerMitLetter = 46 + Int("E".utf8.first!)
+        
+        [0, 1, 3].forEach { floor in
+        
+            print("\nImage Processing of floor: \(floor)\n")
+            
+            // tag = geb number + ascii of geb uppercase letter + floor number + raum number (added in ViewController during button creation)
+            let buttonTag = gebNummerMitLetter + floor
+            let floorPlan = processImage(of: floor)
+            
+            floorPlans[buttonTag] = floorPlan
+        }
+    }
+
+    static private func processImage(of floor: Int) -> (image: CIImage, buttonFrames: [Int : CGRect]) {
         
         var floorPlanCIImage = CIImage(contentsOf: Bundle.main.url(forResource: "E\(floor)", withExtension: "png")!)!
         
@@ -24,8 +54,8 @@ class ImageProcessor {
         let textFeatures = textDetectorInFloorPlan.features(in: floorPlanCIImage)
         
         // doing image transformation in device coordinate system
-        let scaleX = imageViewFrame.width / orginalFloorPlanWidth
-        let scaleY = imageViewFrame.height / orginalFloorPlanHeight
+        let scaleX = imageViewFrame!.width / orginalFloorPlanWidth
+        let scaleY = imageViewFrame!.height / orginalFloorPlanHeight
         let affineScaleTransform = CGAffineTransform(scaleX: scaleX, y: scaleY)
         
         var i = 0, buttonFrames = [Int : CGRect]()
@@ -51,10 +81,9 @@ class ImageProcessor {
                 tesseract.recognize()
                 let ocrText = tesseract.recognizedText.trimmingCharacters(in: .whitespacesAndNewlines)
                 print("Image \(i): OCR Result: " + ocrText + "\n")
-            
-                guard let raum = Int(ocrText),
-                        freeRaums.contains(raum) else {
-                    
+                
+                guard let raum = Int(ocrText) else {
+                
                     continue
                 }
                 
@@ -74,8 +103,14 @@ class ImageProcessor {
                                         .applying(affineTranslationTransform)
                                         .applying(affineScaleTransform)
                 
-                buttonFrame.origin.x += (imageViewFrame.origin.x + parentViewFrames.reduce(CGFloat(0), { (result, frame) in result + frame.origin.x }))
-                buttonFrame.origin.y += (imageViewFrame.origin.y + parentViewFrames.reduce(CGFloat(0), { (result, frame) in result + frame.origin.y }))
+                buttonFrame.origin.x += imageViewFrame!.origin.x
+                buttonFrame.origin.y += imageViewFrame!.origin.y
+                
+                if parentViewFrames != nil {
+                    
+                    buttonFrame.origin.x += parentViewFrames!.reduce(CGFloat(0), { (result, frame) in result + frame.origin.x })
+                    buttonFrame.origin.y += parentViewFrames!.reduce(CGFloat(0), { (result, frame) in result + frame.origin.y })
+                }
                 
                 buttonFrames[raum] = buttonFrame
             }
@@ -85,5 +120,79 @@ class ImageProcessor {
         
         return (floorPlanCIImage, buttonFrames)
     }
+    
+//    static func processImage(floor: Int, freeRaums: [Int], imageViewFrame: CGRect, parentViewFrames: CGRect...) -> (image: CIImage, buttonFrames: [Int : CGRect]) {
+//
+//        var floorPlanCIImage = CIImage(contentsOf: Bundle.main.url(forResource: "E\(floor)", withExtension: "png")!)!
+//
+//        let orginalFloorPlanWidth = floorPlanCIImage.extent.width
+//        let orginalFloorPlanHeight = floorPlanCIImage.extent.height
+//
+//        let imageContext = CIContext()
+//        let textDetectorInFloorPlan = CIDetector(ofType: CIDetectorTypeText, context: imageContext, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
+//        let textFeatures = textDetectorInFloorPlan.features(in: floorPlanCIImage)
+//
+//        // doing image transformation in device coordinate system
+//        let scaleX = imageViewFrame.width / orginalFloorPlanWidth
+//        let scaleY = imageViewFrame.height / orginalFloorPlanHeight
+//        let affineScaleTransform = CGAffineTransform(scaleX: scaleX, y: scaleY)
+//
+//        var i = 0, buttonFrames = [Int : CGRect]()
+//
+//        for textIndex in textFeatures.indices {
+//
+//            let textFeature = textFeatures[textIndex] as! CITextFeature
+//
+//            i += 1
+//
+//            print("Text Rect \(i): Before Rect Increase: \(textFeature.bounds)\n")
+//            let textRect = textFeature.bounds.insetBy(dx: CGFloat(-5), dy: CGFloat(-5))
+//            print("Text Rect \(i): After Rect Increase: \(textRect)\n")
+//
+//            if let tesseract = G8Tesseract(language: "eng") {
+//
+//                let textCGImage = imageContext.createCGImage(floorPlanCIImage, from: textRect)!
+//                let image = UIImage(cgImage: textCGImage).scaleImage(640)!
+//
+//                tesseract.engineMode = .tesseractCubeCombined
+//                tesseract.pageSegmentationMode = .auto
+//                tesseract.image = image.g8_blackAndWhite()
+//                tesseract.recognize()
+//                let ocrText = tesseract.recognizedText.trimmingCharacters(in: .whitespacesAndNewlines)
+//                print("Image \(i): OCR Result: " + ocrText + "\n")
+//
+//                guard let raum = Int(ocrText),
+//                        freeRaums.contains(raum) else {
+//
+//                    continue
+//                }
+//
+//                print("Image \(i): Rect Origin (X,Y): (\(textRect.origin.x), \(textRect.origin.y))\n")
+//                print("Image \(i): Rect Min (X,Y): (\(textRect.minX), \(textRect.minY))\n")
+//                print("Image \(i): Rect Max (X,Y): (\(textRect.maxX), \(textRect.maxY))\n")
+//
+//                let buttonOrigin = CGPoint(x: textRect.origin.x, y: textRect.maxY)
+//                let translationX = CGFloat(0)
+//                let translationY = orginalFloorPlanHeight - (CGFloat(2) * buttonOrigin.y)
+//                let affineTranslationTransform = CGAffineTransform(translationX: translationX, y: translationY)
+//
+//                var buttonFrame = CGRect(origin: buttonOrigin, size: textRect.size)
+//
+//                // doing button transformation in device coordinate system
+//                buttonFrame = buttonFrame
+//                                        .applying(affineTranslationTransform)
+//                                        .applying(affineScaleTransform)
+//
+//                buttonFrame.origin.x += (imageViewFrame.origin.x + parentViewFrames.reduce(CGFloat(0), { (result, frame) in result + frame.origin.x }))
+//                buttonFrame.origin.y += (imageViewFrame.origin.y + parentViewFrames.reduce(CGFloat(0), { (result, frame) in result + frame.origin.y }))
+//
+//                buttonFrames[raum] = buttonFrame
+//            }
+//        }
+//
+//        floorPlanCIImage = floorPlanCIImage.transformed(by: affineScaleTransform)
+//
+//        return (floorPlanCIImage, buttonFrames)
+//    }
     
 }
