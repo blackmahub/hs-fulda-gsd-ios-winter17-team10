@@ -27,15 +27,17 @@ class ImageProcessor {
             return
         }
         
-        // geb int value = geb number + ascii of geb uppercase letter
-        let gebNummerMitLetter = 46 + Int("E".utf8.first!)
+        let geb = "46(E)"
+        
+        // geb int value = sum of ascii values of geb nummer charectars
+        let gebTag = geb.utf8.reduce(0, { result, codeUnit in result + Int(codeUnit) })
         
         [0, 1, 3].forEach { floor in
         
             print("\nImage Processing of floor: \(floor)\n")
             
-            // tag = geb number + ascii of geb uppercase letter + floor number + raum number (added in ViewController during button creation)
-            let buttonTag = gebNummerMitLetter + floor
+            // tag = geb tag + floor number + raum number (added in ViewController during button creation)
+            let buttonTag = gebTag + floor
             let floorPlan = processImage(of: floor)
             
             floorPlans[buttonTag] = floorPlan

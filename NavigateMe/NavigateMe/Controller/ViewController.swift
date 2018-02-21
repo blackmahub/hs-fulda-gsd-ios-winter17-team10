@@ -13,6 +13,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let app = AppEngine()
     
     var freeRaums = [String : [Int : [(raum: Int, duration: String)]]]()
+    var freeRaumButtons = [Int : [UIButton]]()
     
     @IBOutlet weak var searchDateTime: UIDatePicker!
     @IBOutlet weak var gebCollectionView: UICollectionView!
@@ -46,22 +47,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func navigateMeInThisRaum(_ sender: UIButton) {
         
-        let freeRaum = freeRaums["46(E)"]![1]!.filter({ $0.raum == Int(sender.currentTitle!) }).first!
-        let title = "Raum: \(freeRaum.raum)"
-        let message = "Free for next " + freeRaum.duration
+        let raum = Int(sender.currentTitle!)!
+        let floorTag = sender.tag - raum
         
-        let navigationConfirmAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let navigateAction = UIAlertAction(title: "Navigate Me", style: .default) { alertAction in
+        for geb in self.freeRaums {
             
-            print("Hello, please navigate me to " + title + ".\n")
+            let gebNummerMitLetter = geb.key.utf8.reduce(0, { result, codeUnit in result + Int(codeUnit) })
+            let floor = geb.value.filter({ floorTag  == (gebNummerMitLetter + $0.key) })
+            
+            guard !floor.isEmpty else {
+                continue
+            }
+            
+            let freeRaum = floor.first!.value.filter({ raum == $0.raum }).first!
+            self.generateNavigationConfirmAlert(for: freeRaum)
+            
+            break
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        navigationConfirmAlert.addAction(navigateAction)
-        navigationConfirmAlert.addAction(cancelAction)
-        
-        self.present(navigationConfirmAlert, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -78,27 +80,70 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GebCell", for: indexPath) as! GebCollectionViewCell
         
+        print("Cell\(indexPath): \(cell)\n")
+        print("Cell\(indexPath) Subviews: \(cell.subviews)\n")
+        
         guard let floors = self.freeRaums["46(E)"] else {
             
             return cell
         }
         
+        let geb = "46(E)"
+        let gebNummerMitLetter = geb.utf8.reduce(0, { result, codeUnit in result + Int(codeUnit) })
+        
         for (index, floor) in floors.keys.enumerated() {
 
             if indexPath.item == index {
 
-                let floorPlanTag = 46 + Int("E".utf8.first!) + floor
+                let floorPlanTag = gebNummerMitLetter + floor
                 
                 cell.gebLabel.text = "Geb 46(E): Floor \(floor)"
                 cell.floorPlanView.image = UIImage(ciImage: ImageProcessor.floorPlans[floorPlanTag]!.image)
                 
-                ImageProcessor.floorPlans[floorPlanTag]!.buttonFrames.keys.forEach { raumNummer in
+                self.freeRaumButtons[floorPlanTag]!.forEach { raumButton in
                     
-                    let raumButtonTag = floorPlanTag + raumNummer
-                    let raumButton = self.view.viewWithTag(raumButtonTag) as! UIButton
-                    raumButton.isHidden = false
+                    cell.addSubview(raumButton)
                 }
-
+                
+                
+//                ImageProcessor.floorPlans[floorPlanTag]!.buttonFrames.keys.forEach { raumNummer in
+//
+//                    let raumButtonTag = floorPlanTag + raumNummer
+//                    let raumButton = self.view.viewWithTag(raumButtonTag) as! UIButton
+//                    raumButton.isHidden = false
+//                }
+//                ImageProcessor.floorPlans[floorPlanTag]!.buttonFrames.forEach { buttonFrame in
+//
+//                    var buttonFontSize = CGFloat(30)
+//
+//                    let raumButton = UIButton(frame: buttonFrame.value)
+//                    let raumButtonTag = floorPlanTag + buttonFrame.key
+//
+//                    raumButton.tag = raumButtonTag
+//                    raumButton.backgroundColor = UIColor.green
+//                    raumButton.setTitle("\(buttonFrame.key)", for: .normal)
+//
+//                    if 12 == buttonFrame.key || 29 == buttonFrame.key || 133 == buttonFrame.key {
+//
+//                        buttonFontSize = CGFloat(25)
+//
+//                    } else if 32 == buttonFrame.key || 332 == buttonFrame.key || 334 == buttonFrame.key {
+//
+//                        buttonFontSize = CGFloat(20)
+//
+//                    } else if 35 == buttonFrame.key || 36 == buttonFrame.key {
+//
+//                        buttonFontSize = CGFloat(15)
+//                    }
+//
+//                    raumButton.titleLabel!.font = raumButton.titleLabel!.font.withSize(buttonFontSize)
+//                    raumButton.setTitleColor(UIColor.black, for: .normal)
+//                    raumButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
+////                    raumButton.isHidden = true
+//
+//                    cell.addSubview(raumButton)
+//                }
+                
                 break
             }
         }
@@ -139,33 +184,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return cell
     }
     
-    func startImageProcessor() {
+    func generateNavigationConfirmAlert(for freeRaum: (raum: Int, duration: String)) {
         
-        print("After View Loading ...\n")
-        print("Start Image Processor ...\n")
+        let title = "Raum: \(freeRaum.raum)"
+        let message = "Free for next " + freeRaum.duration
         
-        let widthDiffBetweenCollectionViewAndCell = CGFloat(45)
-        let widthDiffBetweenCellAndImageFrame = CGFloat(40)
+        let navigationConfirmAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let heightDiffBetweenCollectionViewAndCell = CGFloat(178)
-        let heightDiffBetweenCellAndImageFrame = CGFloat(83)
+        let navigateAction = UIAlertAction(title: "Navigate Me", style: .default) { alertAction in
+            
+            print("Hello, please navigate me to " + title + ".\n")
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        let imageFrameWidth = self.gebCollectionView.frame.width - (widthDiffBetweenCollectionViewAndCell + widthDiffBetweenCellAndImageFrame)
-        let imageFrameHeight = self.gebCollectionView.frame.height - (heightDiffBetweenCollectionViewAndCell + heightDiffBetweenCellAndImageFrame)
+        navigationConfirmAlert.addAction(navigateAction)
+        navigationConfirmAlert.addAction(cancelAction)
         
-        let cellFrameWidth = self.gebCollectionView.frame.width - widthDiffBetweenCollectionViewAndCell
-        let cellFrameHeight = self.gebCollectionView.frame.height - heightDiffBetweenCollectionViewAndCell
-        
-        let imageFrame = CGRect(x: CGFloat(20), y: CGFloat(62), width: imageFrameWidth, height: imageFrameHeight)
-        let cellFrame = CGRect(x: CGFloat(0), y: CGFloat(89), width: cellFrameWidth, height: cellFrameHeight)
-        
-        ImageProcessor.imageViewFrame = imageFrame
-        ImageProcessor.parentViewFrames = [cellFrame, self.gebCollectionView.frame]
-        ImageProcessor.processImage()
+        self.present(navigationConfirmAlert, animated: true)
+    }
+    
+    func generateFreeRaumButtons() {
+
         ImageProcessor.floorPlans.forEach { floorPlan in
             
-            floorPlan.value.buttonFrames.forEach { buttonFrame in
+            self.freeRaumButtons[floorPlan.key] = [UIButton]()
             
+            floorPlan.value.buttonFrames.forEach { buttonFrame in
+                
                 var buttonFontSize = CGFloat(30)
                 
                 let raumButton = UIButton(frame: buttonFrame.value)
@@ -191,11 +236,37 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 raumButton.titleLabel!.font = raumButton.titleLabel!.font.withSize(buttonFontSize)
                 raumButton.setTitleColor(UIColor.black, for: .normal)
                 raumButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
-                raumButton.isHidden = true
                 
-                self.view.addSubview(raumButton)
+                self.freeRaumButtons[floorPlan.key]! += [raumButton]
             }
         }
+    }
+    
+    func startImageProcessor() {
+        
+        print("After View Loading ...\n")
+        print("Start Image Processor ...\n")
+        
+        let widthDiffBetweenCollectionViewAndCell = CGFloat(45)
+        let widthDiffBetweenCellAndImageFrame = CGFloat(40)
+        
+        let heightDiffBetweenCollectionViewAndCell = CGFloat(178)
+        let heightDiffBetweenCellAndImageFrame = CGFloat(83)
+        
+        let imageFrameWidth = self.gebCollectionView.frame.width - (widthDiffBetweenCollectionViewAndCell + widthDiffBetweenCellAndImageFrame)
+        let imageFrameHeight = self.gebCollectionView.frame.height - (heightDiffBetweenCollectionViewAndCell + heightDiffBetweenCellAndImageFrame)
+        
+//        let cellFrameWidth = self.gebCollectionView.frame.width - widthDiffBetweenCollectionViewAndCell
+//        let cellFrameHeight = self.gebCollectionView.frame.height - heightDiffBetweenCollectionViewAndCell
+
+        let imageFrame = CGRect(x: CGFloat(20), y: CGFloat(62), width: imageFrameWidth, height: imageFrameHeight)
+//        let cellFrame = CGRect(x: CGFloat(0), y: CGFloat(89), width: cellFrameWidth, height: cellFrameHeight)
+
+        ImageProcessor.imageViewFrame = imageFrame
+//        ImageProcessor.parentViewFrames = [cellFrame, self.gebCollectionView.frame]
+        ImageProcessor.processImage()
+        
+        self.generateFreeRaumButtons()
     }
     
     func resetFreeRaumButtonFrames() {
@@ -219,7 +290,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.freeRaums = [String : [Int : [(raum: Int, duration: String)]]]()
             
             // reset free raum button frames
-            self.resetFreeRaumButtonFrames()
+//            self.resetFreeRaumButtonFrames()
             
             print("Free Raums Count: \(dto.count)\n")
             
