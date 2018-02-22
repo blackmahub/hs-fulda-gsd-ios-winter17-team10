@@ -35,19 +35,22 @@ class S2TGebPlanService: RESTService {
         }
     }
     
-    func get(of geb: [String]?, on date: Date) {
+    func get(of gebs: [String], on date: Date) {
+        
+        guard !gebs.isEmpty else {
+            
+            print("Service Error: Geb list is Empty.")
+            return
+        }
         
         var query = [String : String?]()
         
-        query["entryLimit"] = "\(25)"
-        query["nofill"] = "\(0)"
-        query["cache"] = "false"
-        query["_"] = "\(1515166789828)"
+        query["entryLimit"] = "\(1100)"
+        query["nofill"] = "\(1)"
+        query["date"] = date.string(format: "dd-MM-yyyy")
         
-        // TODO_LEARN_HOW_TO_ADD_REST_PATH_PARAMS
-        // TODO_USE_GEB_VAR_IN_REST_PATH
-        
-        let url = self.generateURL(using: "/hfg/rest/st/getGebPlan/46(E)./", query: query)
+        let requestUrl = "/hfg/rest/st/getGebPlan/" + gebs.joined(separator: ",") + "/"
+        let url = self.generateURL(using: requestUrl, query: query)
         
         self.processGET(for: url)
     }

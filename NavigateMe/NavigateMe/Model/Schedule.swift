@@ -8,9 +8,19 @@
 
 import Foundation
 
-struct Schedule {
+struct Schedule: Hashable {
     
     var beginn: Date
     var ende: Date
-
+    
+    var hashValue: Int {
+        
+        return Int(beginn.timeIntervalSince1970)
+    }
+    
+    static func == (lhs: Schedule, rhs: Schedule) -> Bool {
+        
+        return lhs.beginn.timeIntervalSince1970 == rhs.beginn.timeIntervalSince1970
+    }
+    
 }

@@ -1,0 +1,5 @@
+platform :ios, '11.2'
+target 'NavigateMe' do
+    use_frameworks!
+    pod 'TesseractOCRiOS'
+end
