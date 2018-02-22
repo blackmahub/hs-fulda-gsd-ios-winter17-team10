@@ -11,7 +11,7 @@ import Foundation
 struct Raum {
     
     let number: Int
-    var schedules = [Schedule]()
+    var schedules = Set<Schedule>()
     
     // free duration in second
     var status = RaumStatus.FREE(Date.defaultFreeDuration())

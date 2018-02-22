@@ -42,7 +42,7 @@ class AppEngine: RESTServiceDelegate {
         // static mapping
         // floor mapping with raums
         // TODO: fix missmatch with floor plan image
-        let floor2Raums = [0: [6, 9, 12, 29, 32, 35, 36], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 334, 336]]
+        let floor2Raums = [0: [9, 12, 29, 32, 35, 36], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 334, 336]] // 322 ???
         
         var raums = [Raum](), floors = [Floor]()
         
@@ -68,7 +68,7 @@ class AppEngine: RESTServiceDelegate {
     // load data into decision tree
     private func startEngine() {
         
-        print("Engine starting ...")
+//        print("Engine starting ...")
         
         // call RESTful API to fetch geb plan from S2T
         s2TGebPlan.get(of: self.gebs!, on: self.search!)
@@ -77,7 +77,7 @@ class AppEngine: RESTServiceDelegate {
     // refresh decision tree
     private func stopEngine() {
         
-        print("Engine stopping ...")
+//        print("Engine stopping ...")
         
         // reset raum schedules
         for gebIndex in department.gebs.indices {
@@ -96,7 +96,7 @@ class AppEngine: RESTServiceDelegate {
     // reload data into decision tree
     private func restartEngine() {
         
-        print("Engine restarting ...")
+//        print("Engine restarting ...")
         
         stopEngine()
         startEngine()
@@ -105,23 +105,23 @@ class AppEngine: RESTServiceDelegate {
     // make decision from decision tree
     private func startProcess() {
         
-        print("\nProcess starting ...\n")
+//        print("\nProcess starting ...\n")
         
         var freeSchedules = [Schedule](), beforeBeginns = [Schedule](), minBeforeBeginn: Schedule? = nil
         
         for gebIndex in department.gebs.indices {
             
-            print("Geb: " + department.gebs[gebIndex].name)
+//            print("Geb: " + department.gebs[gebIndex].name)
             
             for floorIndex in department.gebs[gebIndex].floors.indices {
                 
-                print("\nFloor: \(department.gebs[gebIndex].floors[floorIndex].number)")
+//                print("\nFloor: \(department.gebs[gebIndex].floors[floorIndex].number)")
                 
                 for raumIndex in department.gebs[gebIndex].floors[floorIndex].raums.indices {
                     
-                    print("Raum: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].number)")
-                    print("Raum Schedules: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules)")
-                    print("Raum Status: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status)")
+//                    print("Raum: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].number)")
+//                    print("Raum Schedules: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules)")
+//                    print("Raum Status: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status)")
                     
                     // if there is no schedule for this raum then continue to next raum
                     // and also reduce free duration from (uni close time - uni open time) to (uni close time - search time)
@@ -130,7 +130,7 @@ class AppEngine: RESTServiceDelegate {
                         // raum status is free
                         department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(self.search!.freeDurationTillUniversityClose())
                         
-                        print()
+//                        print()
                         continue
                     }
                     
@@ -142,7 +142,7 @@ class AppEngine: RESTServiceDelegate {
                         return !((schedule.beginn == self.search! || schedule.beginn < self.search!) && self.search! < schedule.ende)
                     }
                     
-                    print("Free Schedules: \(freeSchedules)")
+//                    print("Free Schedules: \(freeSchedules)")
                     
                     if freeSchedules.count == scheduleCount - 1 {
                     
@@ -174,19 +174,19 @@ class AppEngine: RESTServiceDelegate {
                         }
                     }
                     
-                    print("Raum Status: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status)\n")
+//                    print("Raum Status: \(department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status)\n")
                 }
             }
         }
         
-        print("\n Departmant: \(department)\n")
+//        print("\n Departmant: \(department)\n")
         
         self.previousSearch = self.search!
         self.search = nil
         
         let freeRaumDTOs = generateFreeRaumDTO()
         
-        print("\n Free Raum DTO: \(freeRaumDTOs)\n")
+//        print("\n Free Raum DTO: \(freeRaumDTOs)\n")
         
         self.delegate?.processDidComplete(then: freeRaumDTOs)
     }
@@ -200,12 +200,12 @@ class AppEngine: RESTServiceDelegate {
             return
         }
         
-        print("\nInitial values of Decision Tree:\n")
-        print("\(self.department)")
+//        print("\nInitial values of Decision Tree:\n")
+//        print("\(self.department)")
         
         var gebRaums = [Substring](), mappedIndices = [Int](), beginn: Date? = nil, ende: Date? = nil, raumFromS2T: String? = nil, isScheduleAppended = false
     
-        print("\nData: \(data.count)\n")
+//        print("\nData: \(data.count)\n")
         
         data.forEach { gebPlan in
             
@@ -216,9 +216,11 @@ class AppEngine: RESTServiceDelegate {
             beginn = Date.millisecondToDate(Double(gebPlan.Beginn))
             ende = Date.millisecondToDate(Double(gebPlan.Ende))
             
-            print("Raum: " + gebPlan.Raum)
-            print("Beginn: \(beginn)")
-            print("Ende: \(ende)\n")
+//            print("Raum: " + gebPlan.Raum)
+//            print("Beginn in millisecond: \(gebPlan.Beginn)")
+//            print("Beginn: \(beginn)")
+//            print("Ende in millisecond: \(gebPlan.Ende)")
+//            print("Ende: \(ende)\n")
             
             if mapWithS2T.keys.contains(raumFromS2T!) {
             
@@ -226,7 +228,7 @@ class AppEngine: RESTServiceDelegate {
                 mappedIndices = mapWithS2T[raumFromS2T!]!
                 
                 // append raum schedules
-                department.gebs[mappedIndices[0]].floors[mappedIndices[1]].raums[mappedIndices[2]].schedules += [Schedule(beginn: beginn!, ende: ende!)]
+                department.gebs[mappedIndices[0]].floors[mappedIndices[1]].raums[mappedIndices[2]].schedules.insert(Schedule(beginn: beginn!, ende: ende!))
             
             } else {
             
@@ -242,7 +244,7 @@ class AppEngine: RESTServiceDelegate {
                             
                             if department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].number == Int(gebRaums[1]) {
                                 
-                                department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules += [Schedule(beginn: beginn!, ende: ende!)]
+                                department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].schedules.insert(Schedule(beginn: beginn!, ende: ende!))
                                 mapWithS2T[raumFromS2T!] = [gebIndex, floorIndex, raumIndex]
                                 isScheduleAppended = true
                                 break
@@ -269,22 +271,28 @@ class AppEngine: RESTServiceDelegate {
             })
         })
         
-        print("\nRecord Count: \(recordCount)\n")
+//        print("\nRecord Count: \(recordCount)\n")
         
         // if S2T data count is not equal to transformed decision tree record count
         // then abort the process and check for data accuracy
-        guard data.count == recordCount else {
-            
-            self.delegate?.processDidAbort(reason: "Data accuracy is failed, please check System2Teach data transformation block.")
-            return
-        }
+//        guard data.count == recordCount else {
+//            
+//            self.delegate?.processDidAbort(reason: "Data accuracy is failed, please check System2Teach data transformation block.")
+//            return
+//        }
         
         startProcess()
     }
     
     func searchFreeRaums() {
         
-        print("In App Engine")
+//        print("In App Engine")
+        
+        guard !self.search!.isPast() else {
+            
+            self.delegate?.processDidAbort(reason: "Search date time is need to be either present or future date time.")
+            return
+        }
         
         guard self.search!.isWithinUniversityTime() else {
             
@@ -311,6 +319,7 @@ class AppEngine: RESTServiceDelegate {
         guard !self.search!.onlyTimeEqual(to: self.previousSearch!) else {
             
             print("do nothing, if search time == last searched time")
+            self.delegate?.processDidComplete(then: nil)
             return
         }
         

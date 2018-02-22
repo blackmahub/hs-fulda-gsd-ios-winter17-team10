@@ -97,4 +97,10 @@ extension Date {
         return (time == universityOpenTime || time > universityOpenTime) && time < universityCloseTime
     }
     
+    func isPast() -> Bool {
+        
+        let today = Date()
+        return self < today
+    }
+    
 }

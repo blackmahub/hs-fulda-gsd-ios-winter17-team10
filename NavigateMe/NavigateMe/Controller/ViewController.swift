@@ -38,7 +38,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func searchFreeRaums(_ sender: UIButton) {
 
-        print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
+//        print("\nDate Picker Date: " + searchDateTime.date.description + "\n")
         
         app.gebs = ["46(E)."]
         app.search = searchDateTime.date
@@ -80,8 +80,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GebCell", for: indexPath) as! GebCollectionViewCell
         
-        print("Cell\(indexPath): \(cell)\n")
-        print("Cell\(indexPath) Subviews: \(cell.subviews)\n")
+//        print("\nCell\(indexPath): \(cell)\n")
+//        print("Cell\(indexPath) Subviews: \(cell.subviews)\n")
         
         guard let floors = self.freeRaums["46(E)"] else {
             
@@ -100,86 +100,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 cell.gebLabel.text = "Geb 46(E): Floor \(floor)"
                 cell.floorPlanView.image = UIImage(ciImage: ImageProcessor.floorPlans[floorPlanTag]!.image)
                 
-                self.freeRaumButtons[floorPlanTag]!.forEach { raumButton in
+                floors[floor]!.forEach { raumPlan in
                     
-                    cell.addSubview(raumButton)
+                    let raumPlanTag = floorPlanTag + raumPlan.raum
+                    let raumButton = self.freeRaumButtons[floorPlanTag]!.filter({ $0.tag ==  raumPlanTag}).first
+                    
+                    if raumButton != nil {
+                    
+                        cell.addSubview(raumButton!)
+                    }
                 }
-                
-                
-//                ImageProcessor.floorPlans[floorPlanTag]!.buttonFrames.keys.forEach { raumNummer in
-//
-//                    let raumButtonTag = floorPlanTag + raumNummer
-//                    let raumButton = self.view.viewWithTag(raumButtonTag) as! UIButton
-//                    raumButton.isHidden = false
-//                }
-//                ImageProcessor.floorPlans[floorPlanTag]!.buttonFrames.forEach { buttonFrame in
-//
-//                    var buttonFontSize = CGFloat(30)
-//
-//                    let raumButton = UIButton(frame: buttonFrame.value)
-//                    let raumButtonTag = floorPlanTag + buttonFrame.key
-//
-//                    raumButton.tag = raumButtonTag
-//                    raumButton.backgroundColor = UIColor.green
-//                    raumButton.setTitle("\(buttonFrame.key)", for: .normal)
-//
-//                    if 12 == buttonFrame.key || 29 == buttonFrame.key || 133 == buttonFrame.key {
-//
-//                        buttonFontSize = CGFloat(25)
-//
-//                    } else if 32 == buttonFrame.key || 332 == buttonFrame.key || 334 == buttonFrame.key {
-//
-//                        buttonFontSize = CGFloat(20)
-//
-//                    } else if 35 == buttonFrame.key || 36 == buttonFrame.key {
-//
-//                        buttonFontSize = CGFloat(15)
-//                    }
-//
-//                    raumButton.titleLabel!.font = raumButton.titleLabel!.font.withSize(buttonFontSize)
-//                    raumButton.setTitleColor(UIColor.black, for: .normal)
-//                    raumButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
-////                    raumButton.isHidden = true
-//
-//                    cell.addSubview(raumButton)
-//                }
                 
                 break
             }
         }
-        
-//        var freeRaumsOfFloor1 = [Int]()
-//
-//        for floor in floors {
-//
-//            if 1 == floor.key {
-//
-//                freeRaumsOfFloor1 = floor.value.map({ $0.raum })
-//                break
-//            }
-//        }
-//
-//        print("\nFree Raums Array from Free Raums Dictionary:\n")
-//        print("\(freeRaumsOfFloor1)\n")
-//
-//        cell.gebLabel.text = "Geb 46(E): Floor 1"
-        
-//        let floorPlan = ImageProcessor.processImage(floor: 1, freeRaums: freeRaumsOfFloor1, imageViewFrame: cell.floorPlanView.frame, parentViewFrames: cell.frame, collectionView.frame)
-//
-//        cell.floorPlanView.image = UIImage(ciImage: floorPlan.image)
-//
-//        for buttonFrame in floorPlan.buttonFrames {
-//
-//            let raumButton = UIButton(frame: buttonFrame.value)
-//
-//            raumButton.backgroundColor = UIColor.green
-//            raumButton.setTitle("\(buttonFrame.key)", for: .normal)
-//            raumButton.titleLabel!.font = raumButton.titleLabel!.font.withSize(CGFloat(30))
-//            raumButton.setTitleColor(UIColor.black, for: .normal)
-//            raumButton.addTarget(self, action: #selector(ViewController.navigateMeInThisRaum(_:)), for: .touchUpInside)
-//
-//            self.view.addSubview(raumButton)
-//        }
         
         return cell
     }
@@ -244,8 +178,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func startImageProcessor() {
         
-        print("After View Loading ...\n")
-        print("Start Image Processor ...\n")
+//        print("After View Loading ...\n")
+//        print("Start Image Processor ...\n")
         
         let widthDiffBetweenCollectionViewAndCell = CGFloat(45)
         let widthDiffBetweenCellAndImageFrame = CGFloat(40)
@@ -269,38 +203,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.generateFreeRaumButtons()
     }
     
-    func resetFreeRaumButtonFrames() {
+    func processDidComplete(then dto: [FreeRaumDTO]?) {
         
-        ImageProcessor.floorPlans.forEach { floorPlan in
+        guard let freeRaumDTO = dto else {
             
-            floorPlan.value.buttonFrames.keys.forEach { raumNummer in
-            
-                let raumButtonTag = floorPlan.key + raumNummer
-                let raumButton = self.view.viewWithTag(raumButtonTag) as! UIButton
-                raumButton.isHidden = true
+            DispatchQueue.main.async {
+                
+                self.gebCollectionView.isHidden = false
             }
+            
+            return
         }
-    }
-    
-    func processDidComplete(then dto: [FreeRaumDTO]) {
         
         DispatchQueue.main.async {
             
             // reset free raums dictionary
             self.freeRaums = [String : [Int : [(raum: Int, duration: String)]]]()
             
-            // reset free raum button frames
-//            self.resetFreeRaumButtonFrames()
+//            print("Free Raums Count: \(dto.count)\n")
             
-            print("Free Raums Count: \(dto.count)\n")
-            
-            dto.forEach { freeRaum in
+            freeRaumDTO.forEach { freeRaum in
              
-                print("Geb: " + freeRaum.geb)
-                print("Floor: \(freeRaum.floor)")
-                print("Raum: \(freeRaum.raum)")
-                print("Duration: \(freeRaum.duration)\n")
-                
+//                print("Geb: " + freeRaum.geb)
+//                print("Floor: \(freeRaum.floor)")
+//                print("Raum: \(freeRaum.raum)")
+//                print("Duration: \(freeRaum.duration)\n")
+
                 if !self.freeRaums.keys.contains(freeRaum.geb) {
                     
                     self.freeRaums[freeRaum.geb] = [Int : [(raum: Int, duration: String)]]()
@@ -314,8 +242,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.freeRaums[freeRaum.geb]![freeRaum.floor]! += [(freeRaum.raum, freeRaum.duration)]
             }
             
-            print("Free Raums Dictionary:")
-            print(self.freeRaums.description)
+//            print("Free Raums Dictionary:")
+//            print(self.freeRaums.description)
             
             self.gebCollectionView.isHidden = false
             self.gebCollectionView.reloadData()
@@ -326,8 +254,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         DispatchQueue.main.async {
             
-            print("Process is aborted.")
-            print("Reason: " + message)
+//            print("Process is aborted.")
+//            print("Reason: " + message)
             
             self.gebCollectionView.isHidden = true
             
