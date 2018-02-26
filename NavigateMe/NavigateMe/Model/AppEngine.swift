@@ -41,8 +41,7 @@ class AppEngine: RESTServiceDelegate {
         
         // static mapping
         // floor mapping with raums
-        // TODO: fix missmatch with floor plan image
-        let floor2Raums = [0: [9, 12, 29, 32, 35, 36], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [322, 332, 334, 336]] // 322 ???
+        let floor2Raums = [0: [9, 12, 29, 32, 35, 36], 1 : [9, 105, 107, 112, 121, 129, 131, 133, 139], 3 : [332, 334, 336]]
         
         var raums = [Raum](), floors = [Floor]()
         
@@ -170,7 +169,7 @@ class AppEngine: RESTServiceDelegate {
                             })
                             
                             // raum status is free
-                            department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(minBeforeBeginn!.beginn.timeIntervalSince1970 - self.search!.timeIntervalSince1970)
+                            department.gebs[gebIndex].floors[floorIndex].raums[raumIndex].status = .FREE(minBeforeBeginn!.beginn.time().timeIntervalSince1970 - self.search!.time().timeIntervalSince1970)
                         }
                     }
                     
@@ -207,7 +206,7 @@ class AppEngine: RESTServiceDelegate {
     
 //        print("\nData: \(data.count)\n")
         
-        data.forEach { gebPlan in
+        for gebPlan in data {
             
             gebRaums = gebPlan.Raum.split(separator: "/")
             
@@ -215,6 +214,14 @@ class AppEngine: RESTServiceDelegate {
             
             beginn = Date.millisecondToDate(Double(gebPlan.Beginn))
             ende = Date.millisecondToDate(Double(gebPlan.Ende))
+            
+            guard beginn!.onlyDateEqual(to: self.search!),
+                ende!.onlyDateEqual(to: self.search!) else {
+                    
+                    print("System2Teach dates are not matched with search date, please check System2Teach response data.")
+                    self.delegate?.processDidAbort(reason: "System2Teach dates are not matched with search date.")
+                    return
+            }
             
 //            print("Raum: " + gebPlan.Raum)
 //            print("Beginn in millisecond: \(gebPlan.Beginn)")
@@ -276,8 +283,9 @@ class AppEngine: RESTServiceDelegate {
         // if S2T data count is not equal to transformed decision tree record count
         // then abort the process and check for data accuracy
 //        guard data.count == recordCount else {
-//            
-//            self.delegate?.processDidAbort(reason: "Data accuracy is failed, please check System2Teach data transformation block.")
+//
+//            print("Data accuracy is failed with System2Teach, please check System2Teach data transformation block.")
+//            self.delegate?.processDidAbort(reason: "Data accuracy is failed with System2Teach.")
 //            return
 //        }
         
