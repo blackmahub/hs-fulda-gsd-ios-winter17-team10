@@ -1,5 +1,12 @@
 platform :ios, '11.2'
+
 target 'NavigateMe' do
+
     use_frameworks!
+
     pod 'TesseractOCRiOS'
+    pod 'GooglePlaces'
+    pod 'GooglePlacePicker'
+    pod 'GoogleMaps'
+
 end

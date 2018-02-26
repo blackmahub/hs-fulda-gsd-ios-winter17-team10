@@ -326,7 +326,7 @@ class AppEngine: RESTServiceDelegate {
         // do nothing, if search time == last searched time
         guard !self.search!.onlyTimeEqual(to: self.previousSearch!) else {
             
-            print("do nothing, if search time == last searched time")
+            print("do nothing, if search date time == last searched date time")
             self.delegate?.processDidComplete(then: nil)
             return
         }

@@ -25,6 +25,7 @@
 		D33BDA8F2036828E0087FCB8 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33BDA8E2036828E0087FCB8 /* ImageProcessor.swift */; };
 		D33BDA922038516E0087FCB8 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33BDA912038516E0087FCB8 /* UIImageExtension.swift */; };
 		D33BDA9E2039951D0087FCB8 /* E1.png in Resources */ = {isa = PBXBuildFile; fileRef = D33BDA9D2039951D0087FCB8 /* E1.png */; };
+		D34B43AD20445F0F00F36151 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34B43AC20445F0F00F36151 /* GoogleMapViewController.swift */; };
 		D351136620136D1200D9DCC9 /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136520136D1200D9DCC9 /* RESTService.swift */; };
 		D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */; };
 		D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */ = {isa = PBXBuildFile; fileRef = D351136920136F1800D9DCC9 /* S2TGebPlan .swift */; };
@@ -32,7 +33,7 @@
 		D3527C8F203BB52F00C387E5 /* E0.png in Resources */ = {isa = PBXBuildFile; fileRef = D3527C8E203BB52F00C387E5 /* E0.png */; };
 		D3527C93203C040600C387E5 /* E3.png in Resources */ = {isa = PBXBuildFile; fileRef = D3527C92203C040600C387E5 /* E3.png */; };
 		D35D247B2012D54F0008817F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35D247A2012D54F0008817F /* AppDelegate.swift */; };
-		D35D247D2012D54F0008817F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35D247C2012D54F0008817F /* ViewController.swift */; };
+		D35D247D2012D54F0008817F /* FreeRaumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35D247C2012D54F0008817F /* FreeRaumViewController.swift */; };
 		D35D24802012D54F0008817F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35D247E2012D54F0008817F /* Main.storyboard */; };
 		D35D24822012D54F0008817F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D35D24812012D54F0008817F /* Assets.xcassets */; };
 		D35D24852012D54F0008817F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D35D24832012D54F0008817F /* LaunchScreen.storyboard */; };
@@ -74,6 +75,7 @@
 		D33BDA8E2036828E0087FCB8 /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		D33BDA912038516E0087FCB8 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		D33BDA9D2039951D0087FCB8 /* E1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E1.png; sourceTree = "<group>"; };
+		D34B43AC20445F0F00F36151 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		D351136520136D1200D9DCC9 /* RESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
 		D351136720136D2D00D9DCC9 /* RESTServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTServiceDelegate.swift; sourceTree = "<group>"; };
 		D351136920136F1800D9DCC9 /* S2TGebPlan .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "S2TGebPlan .swift"; sourceTree = "<group>"; };
@@ -82,7 +84,7 @@
 		D3527C92203C040600C387E5 /* E3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E3.png; sourceTree = "<group>"; };
 		D35D24772012D54F0008817F /* NavigateMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigateMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D35D247A2012D54F0008817F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D35D247C2012D54F0008817F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D35D247C2012D54F0008817F /* FreeRaumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRaumViewController.swift; sourceTree = "<group>"; };
 		D35D247F2012D54F0008817F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D35D24812012D54F0008817F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D35D24842012D54F0008817F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -196,8 +198,9 @@
 		D35D248D2012D9E20008817F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D35D247C2012D54F0008817F /* ViewController.swift */,
+				D35D247C2012D54F0008817F /* FreeRaumViewController.swift */,
 				9371E0302029E7DF0042F902 /* GebCollectionViewCell.swift */,
+				D34B43AC20445F0F00F36151 /* GoogleMapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -348,9 +351,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NavigateMe/Pods-NavigateMe-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -383,7 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D351136820136D2D00D9DCC9 /* RESTServiceDelegate.swift in Sources */,
-				D35D247D2012D54F0008817F /* ViewController.swift in Sources */,
+				D35D247D2012D54F0008817F /* FreeRaumViewController.swift in Sources */,
 				D301C9B22027284E000938FB /* Department.swift in Sources */,
 				D351136A20136F1800D9DCC9 /* S2TGebPlan .swift in Sources */,
 				93F6D77A2028CE080074592D /* FreeRaumDTO.swift in Sources */,
@@ -392,6 +402,7 @@
 				D301C9BE20276B2E000938FB /* DateExtension.swift in Sources */,
 				D351136C20136F3300D9DCC9 /* S2TGebPlanService.swift in Sources */,
 				9371E0312029E7DF0042F902 /* GebCollectionViewCell.swift in Sources */,
+				D34B43AD20445F0F00F36151 /* GoogleMapViewController.swift in Sources */,
 				D33BDA8F2036828E0087FCB8 /* ImageProcessor.swift in Sources */,
 				D301C9B820272B59000938FB /* Raum.swift in Sources */,
 				D301C9B620272B04000938FB /* Floor.swift in Sources */,
