@@ -97,7 +97,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
                 let floorPlanTag = gebNummerMitLetter + floor
                 
-                cell.gebLabel.text = "Geb 46(E): Floor \(floor)"
+                cell.gebLabel.text = "Gebäude 46(E): Floor \(floor)"
                 cell.floorPlanView.image = UIImage(ciImage: ImageProcessor.floorPlans[floorPlanTag]!.image)
                 
                 floors[floor]!.forEach { raumPlan in
