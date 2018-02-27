@@ -1,6 +1,6 @@
 //
-//  ImageProcessor.swift
-//  NavigateMe
+//  IPEngine.swift
+//  Image Processor Engine
 //
 //  Created by mahbub on 2/16/18.
 //  Copyright © 2018 Fulda University Of Applied Sciences. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import CoreImage
 import TesseractOCR
 
-class ImageProcessor {
+class IPEngine {
     
     static var imageViewFrame: CGRect? = nil
     static var parentViewFrames: [CGRect]? = nil

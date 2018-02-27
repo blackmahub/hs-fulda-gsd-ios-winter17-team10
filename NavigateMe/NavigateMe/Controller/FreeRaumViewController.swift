@@ -10,7 +10,7 @@ import UIKit
 
 class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AppEngineDelegate {
     
-    let app = AppEngine()
+    let app = CAEngine()
     
     var freeRaums = [String : [Int : [(raum: Int, duration: String)]]]()
     var freeRaumButtons = [Int : [UIButton]]()
@@ -28,7 +28,7 @@ class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UIColl
         gebCollectionView.dataSource = self
 
         // doing one time image processing for entire application life cycle
-        guard ImageProcessor.floorPlans.isEmpty else {
+        guard IPEngine.floorPlans.isEmpty else {
             
             return
         }
@@ -98,7 +98,7 @@ class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UIColl
                 let floorPlanTag = gebNummerMitLetter + floor
                 
                 cell.gebLabel.text = "Gebäude " + geb + ": Floor \(floor)"
-                cell.floorPlanView.image = UIImage(ciImage: ImageProcessor.floorPlans[floorPlanTag]!.image)
+                cell.floorPlanView.image = UIImage(ciImage: IPEngine.floorPlans[floorPlanTag]!.image)
                 
                 floors[floor]!.forEach { raumPlan in
                     
@@ -127,7 +127,7 @@ class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         let navigateAction = UIAlertAction(title: "Navigate Me", style: .default) { alertAction in
             
-            print("Hello, please navigate me to " + title + " of Gebäude " + freeRaum.geb + ": Floor \(freeRaum.floor)\n")
+//            print("Hello, please navigate me to " + title + " of Gebäude " + freeRaum.geb + ": Floor \(freeRaum.floor)\n")
             
             let googleMapViewController = self.storyboard!.instantiateViewController(withIdentifier: "GoogleMapView") as! GoogleMapViewController
             googleMapViewController.geb = freeRaum.geb
@@ -147,7 +147,7 @@ class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func generateFreeRaumButtons() {
 
-        ImageProcessor.floorPlans.forEach { floorPlan in
+        IPEngine.floorPlans.forEach { floorPlan in
             
             self.freeRaumButtons[floorPlan.key] = [UIButton]()
             
@@ -204,9 +204,9 @@ class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UIColl
         let imageFrame = CGRect(x: CGFloat(20), y: CGFloat(62), width: imageFrameWidth, height: imageFrameHeight)
 //        let cellFrame = CGRect(x: CGFloat(0), y: CGFloat(89), width: cellFrameWidth, height: cellFrameHeight)
 
-        ImageProcessor.imageViewFrame = imageFrame
+        IPEngine.imageViewFrame = imageFrame
 //        ImageProcessor.parentViewFrames = [cellFrame, self.gebCollectionView.frame]
-        ImageProcessor.processImage()
+        IPEngine.processImage()
         
         self.generateFreeRaumButtons()
     }

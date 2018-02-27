@@ -1,6 +1,6 @@
 //
-//  AppEngine.swift
-//  AppEngine
+//  CAEngine.swift
+//  Core App Engine
 //
 //  Created by mahbub on 2/4/18.
 //  Copyright © 2018 Fulda University Of Applied Sciences. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppEngine: RESTServiceDelegate {
+class CAEngine: RESTServiceDelegate {
     
     private let s2TGebPlan = S2TGebPlanService()
     
