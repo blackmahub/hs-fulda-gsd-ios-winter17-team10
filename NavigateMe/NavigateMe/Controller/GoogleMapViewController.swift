@@ -14,8 +14,11 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
 
     let navigation = NEngine()
     
+    let floors = ["Floor: 0" : 0, "Floor: 1" : 1, "Floor: 3" : 3]
+    let raumCoordinates = ["46(E).0.9" : CLLocationCoordinate2D(latitude: 50.5652765, longitude: 9.6851969), "46(E).0.12" : CLLocationCoordinate2D(latitude: 50.5651926, longitude: 9.6854397)]
+    
     let universityCampusArea = CLLocationCoordinate2D(latitude: 50.5650077, longitude: 9.6853589)
-    let centerLocationGeb46E = CLLocationCoordinate2D(latitude: 50.5650899, longitude: 9.6855439)
+    let centerCoordinateGeb46E = CLLocationCoordinate2D(latitude: 50.5650899, longitude: 9.6855439)
     let locationManager = CLLocationManager()
     
     var geb: String? = nil
@@ -33,11 +36,18 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
         let mapView = GMSMapView.map(withFrame: .zero, camera: cameraPostion)
         mapView.isMyLocationEnabled = true
         
-        let groundOverlay = GMSGroundOverlay(position: centerLocationGeb46E, icon: UIImage(named: "E\(self.floor!).png"), zoomLevel: CGFloat(19.7))
+        let groundOverlay = GMSGroundOverlay(position: self.centerCoordinateGeb46E, icon: UIImage(named: "E\(self.floor!).png"), zoomLevel: CGFloat(19.7))
         groundOverlay.bearing = 30
         groundOverlay.map = mapView
         
         self.view = mapView
+        
+        let floorSwitcher = UISegmentedControl(items: floors.keys.sorted())
+        floorSwitcher.selectedSegmentIndex = self.floor!
+        floorSwitcher.autoresizingMask = .flexibleWidth
+        floorSwitcher.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+        floorSwitcher.addTarget(self, action: #selector(GoogleMapViewController.drawFloorPlanOnMap(_:)), for: .valueChanged)
+        self.navigationItem.titleView = floorSwitcher
         
         self.navigation.delegate = self
         
@@ -49,6 +59,19 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
         self.locationManager.startUpdatingLocation()
     }
     
+    @IBAction func drawFloorPlanOnMap(_ sender: UISegmentedControl) {
+        
+        let mapView = self.view as! GMSMapView
+        let currentFloor = self.floors[sender.titleForSegment(at: sender.selectedSegmentIndex)!]!
+        
+        let groundOverlay = GMSGroundOverlay(position: self.centerCoordinateGeb46E, icon: UIImage(named: "E\(currentFloor).png"), zoomLevel: CGFloat(19.7))
+        groundOverlay.bearing = 30
+        groundOverlay.zIndex = 0
+        groundOverlay.map = mapView
+        
+        mapView.animate(toLocation: self.centerCoordinateGeb46E)
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let currentLocation = locations.last!
@@ -56,7 +79,7 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
         (self.view as! GMSMapView).animate(toLocation: currentLocation.coordinate)
         
         let origin = currentLocation.coordinate
-        let destination = CLLocationCoordinate2D(latitude: 50.5551995, longitude: 9.6793356)
+        let destination = CLLocationCoordinate2D(latitude: 50.5639708, longitude: 9.6852563)
         self.navigation.getDirectionFromGoogleMapAPI(origin: origin, destination: destination)
     }
     
@@ -75,12 +98,14 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
             }
             
             // inside university path
-            path.add(CLLocationCoordinate2D(latitude: 50.5649110, longitude: 9.6860784))
-            path.add(CLLocationCoordinate2D(latitude: 50.5649485, longitude: 9.6859888))
+//            path.add(CLLocationCoordinate2D(latitude: 50.5649485, longitude: 9.6859888))
+            path.add(CLLocationCoordinate2D(latitude: 50.5648966, longitude: 9.6860720))
+            path.add(CLLocationCoordinate2D(latitude: 50.5649281, longitude: 9.6859788))
             
             let polyline = GMSPolyline(path: path)
             polyline.strokeWidth = 5
             polyline.strokeColor = UIColor.purple
+            polyline.zIndex = 100
             polyline.map = self.view as! GMSMapView
         }
     }
