@@ -1,5 +1,5 @@
 //
-//  AppEngineDelegate.swift
+//  EngineDelegate.swift
 //  NavigateMe
 //
 //  Created by mahbub on 2/4/18.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol AppEngineDelegate {
+protocol EngineDelegate {
     
-    func processDidComplete(then dto: [FreeRaumDTO]?)
+    func processDidComplete(then dto: Any)
     
     func processDidAbort(reason message: String)
     

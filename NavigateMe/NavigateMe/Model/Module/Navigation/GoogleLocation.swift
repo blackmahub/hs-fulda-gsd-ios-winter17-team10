@@ -1,15 +1,16 @@
 //
-//  RESTServiceDelegate.swift
+//  GoogleLocation.swift
 //  NavigateMe
 //
-//  Created by mahbub on 1/20/18.
+//  Created by mahbub on 2/27/18.
 //  Copyright © 2018 Fulda University Of Applied Sciences. All rights reserved.
 //
 
 import Foundation
 
-protocol RESTServiceDelegate {
+struct GoogleLocation: Decodable {
     
-    func dataDidReceive(data: Any)
+    var lat: Double
+    var lng: Double
     
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AppEngineDelegate {
+class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, EngineDelegate {
     
     let app = CAEngine()
     
@@ -211,9 +211,10 @@ class FreeRaumViewController: UIViewController, UICollectionViewDelegate, UIColl
         self.generateFreeRaumButtons()
     }
     
-    func processDidComplete(then dto: [FreeRaumDTO]?) {
+    func processDidComplete(then dto: Any) {
         
-        guard let freeRaumDTO = dto else {
+        guard let freeRaumDTO = dto as? [FreeRaumDTO],
+                !freeRaumDTO.isEmpty else {
             
             DispatchQueue.main.async {
                 

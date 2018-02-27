@@ -30,7 +30,7 @@ class CAEngine: RESTServiceDelegate {
     // gebäude list
     var gebs: [String]?
     
-    var delegate: AppEngineDelegate?
+    var delegate: EngineDelegate?
     
     init() {
         
@@ -190,9 +190,10 @@ class CAEngine: RESTServiceDelegate {
         self.delegate?.processDidComplete(then: freeRaumDTOs)
     }
     
-    func dataDidReceive(data: [S2TGebPlan]) {
+    func dataDidReceive(data: Any) {
         
-        guard !data.isEmpty else {
+        guard let s2TGebPlans = data as? [S2TGebPlan],
+            !s2TGebPlans.isEmpty else {
             
             print("No Geb Plan is found from System2Teach.")
             self.delegate?.processDidAbort(reason: "University is Closed.")
@@ -204,9 +205,9 @@ class CAEngine: RESTServiceDelegate {
         
         var gebRaums = [Substring](), mappedIndices = [Int](), beginn: Date? = nil, ende: Date? = nil, raumFromS2T: String? = nil, isScheduleAppended = false
     
-//        print("\nData: \(data.count)\n")
+//        print("\nData: \(s2TGebPlans.count)\n")
         
-        for gebPlan in data {
+        for gebPlan in s2TGebPlans {
             
             gebRaums = gebPlan.Raum.split(separator: "/")
             
@@ -327,7 +328,7 @@ class CAEngine: RESTServiceDelegate {
         guard !self.search!.onlyTimeEqual(to: self.previousSearch!) else {
             
             print("do nothing, if search date time == last searched date time")
-            self.delegate?.processDidComplete(then: nil)
+            self.delegate?.processDidComplete(then: [])
             return
         }
         

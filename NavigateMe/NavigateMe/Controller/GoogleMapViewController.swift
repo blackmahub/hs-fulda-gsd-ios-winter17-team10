@@ -110,35 +110,3 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
 }
-
-struct GoogleDirection: Decodable {
-    
-    var routes: [GoogleRoute]
-    var status: String
-}
-
-struct GoogleRoute: Decodable {
-    
-    var legs: [GoogleLeg]
-    
-}
-
-struct GoogleLeg: Decodable {
-    
-    var steps: [GoogleStep]
-    
-}
-
-struct GoogleStep: Decodable {
-    
-    var start_location: GoogleLocation
-    var end_location: GoogleLocation
-    
-}
-
-struct GoogleLocation: Decodable {
-    
-    var lat: Double
-    var lng: Double
-    
-}
