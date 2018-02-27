@@ -10,17 +10,19 @@ import Foundation
 
 class RESTService {
     
-    var networkProtocol: String
-    var host: String
-    var port: Int?
+    private var networkProtocol: String
+    private var host: String
+    private var port: Int?
     
-    var delegate: RESTServiceDelegate? = nil
+    var delegate: RESTServiceDelegate?
     
     init(with networkProtocol: String, host: String, port: Int? = nil) {
         
         self.networkProtocol = networkProtocol
         self.host = host
         self.port = port
+        
+        self.delegate = nil
     }
     
     func callbackAfterCompletion(data: Data?, response: URLResponse?, error: Error?) {}

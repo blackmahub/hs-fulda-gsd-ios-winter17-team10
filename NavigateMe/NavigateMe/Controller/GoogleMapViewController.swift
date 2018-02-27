@@ -10,8 +10,10 @@ import UIKit
 import CoreLocation
 import GoogleMaps
 
-class GoogleMapViewController: UIViewController, CLLocationManagerDelegate {
+class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, EngineDelegate {
 
+    let navigation = NEngine()
+    
     let universityCampusArea = CLLocationCoordinate2D(latitude: 50.5650077, longitude: 9.6853589)
     let centerLocationGeb46E = CLLocationCoordinate2D(latitude: 50.5650899, longitude: 9.6855439)
     let locationManager = CLLocationManager()
@@ -37,12 +39,14 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate {
         
         self.view = mapView
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        locationManager.activityType = CLActivityType.otherNavigation
-        locationManager.distanceFilter = 100
-        locationManager.startUpdatingLocation()
+        self.navigation.delegate = self
+        
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        self.locationManager.activityType = CLActivityType.otherNavigation
+        self.locationManager.distanceFilter = 100
+        self.locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -53,60 +57,46 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate {
         
         let origin = currentLocation.coordinate
         let destination = CLLocationCoordinate2D(latitude: 50.5551995, longitude: 9.6793356)
-        self.getDirectionFromGoogleMapAPI(origin: origin, destination: destination)
+        self.navigation.getDirectionFromGoogleMapAPI(origin: origin, destination: destination)
     }
     
-    func getDirectionFromGoogleMapAPI(origin: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
+    func processDidComplete(then dto: Any) {
         
-        let url = URL(string: "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin.latitude),\(origin.longitude)&destination=\(destination.latitude),\(destination.longitude)&key=AIzaSyA5WKLZCTreqWGGVNdeucTzqCgsLfEf8CU&mode=walking")!
+        let steps = dto as! [GoogleStep]
         
-        print("\nURL: \(url)\n")
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        DispatchQueue.main.async {
             
-            print("\nJSON Response from Google Direction API:\n")
-            print("\(data)\n")
+            let path = GMSMutablePath()
             
-            guard let directionData = data else {
-                return
+            steps.forEach { step in
+                
+                path.add(CLLocationCoordinate2D(latitude: step.start_location.lat, longitude: step.start_location.lng))
+                path.add(CLLocationCoordinate2D(latitude: step.end_location.lat, longitude: step.end_location.lng))
             }
             
-            DispatchQueue.main.async {
+            // inside university path
+            path.add(CLLocationCoordinate2D(latitude: 50.5649110, longitude: 9.6860784))
+            path.add(CLLocationCoordinate2D(latitude: 50.5649485, longitude: 9.6859888))
+            
+            let polyline = GMSPolyline(path: path)
+            polyline.strokeWidth = 5
+            polyline.strokeColor = UIColor.purple
+            polyline.map = self.view as! GMSMapView
+        }
+    }
+    
+    func processDidAbort(reason message: String) {
+        
+        DispatchQueue.main.async {
+            
+            let abortAlert = UIAlertController(title: "Process is aborted.", message: "Reason: " + message, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { alertAction in
                 
-                do {
-                    self.googleDirection = try JSONDecoder().decode(GoogleDirection.self, from: directionData)
-                    print("After Decode: \(self.googleDirection)\n")
-                } catch let jsonError {
-                    print("\nJSON Error: " + jsonError.localizedDescription + "\n")
-                }
-                
-                guard self.googleDirection != nil,
-                    "OK" == self.googleDirection!.status else {
-                        
-                        return
-                }
-                
-                print("\nCreating GMS Path ...\n")
-                let steps = self.googleDirection!.routes.flatMap({ $0.legs.flatMap({ $0.steps }) })
-                print("\nSteps: \(steps)\n")
-                
-                let path = GMSMutablePath()
-                steps.forEach { step in
-                    
-                    path.add(CLLocationCoordinate2D(latitude: step.start_location.lat, longitude: step.start_location.lng))
-                    path.add(CLLocationCoordinate2D(latitude: step.end_location.lat, longitude: step.end_location.lng))
-                }
-                
-                // inside university path
-                path.add(CLLocationCoordinate2D(latitude: 50.5649110, longitude: 9.6860784))
-                path.add(CLLocationCoordinate2D(latitude: 50.5649485, longitude: 9.6859888))
-                
-                let polyline = GMSPolyline(path: path)
-                polyline.strokeWidth = 5
-                polyline.strokeColor = UIColor.purple
-                polyline.map = self.view as! GMSMapView
+                // TODO - Back to existing FreeRaumViewController instance
             }
-        }.resume()
+            abortAlert.addAction(cancelAction)
+            self.present(abortAlert, animated: true)
+        }
     }
     
 }
