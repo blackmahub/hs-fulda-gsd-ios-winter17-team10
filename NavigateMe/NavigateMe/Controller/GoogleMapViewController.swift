@@ -15,7 +15,26 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
     let navigation = NEngine()
     
     let floors = ["Floor: 0" : 0, "Floor: 1" : 1, "Floor: 3" : 3]
-    let raumCoordinates = ["46(E).0.9" : CLLocationCoordinate2D(latitude: 50.5652765, longitude: 9.6851969), "46(E).0.12" : CLLocationCoordinate2D(latitude: 50.5651926, longitude: 9.6854397)]
+    
+//    Hello Mahbub 46(E).0.9: 265
+//    Hello Mahbub 46(E).0.12: 268
+//    Hello Mahbub 46(E).0.29: 285
+//    Hello Mahbub 46(E).0.32: 288
+//    Hello Mahbub 46(E).0.35: 291
+//    Hello Mahbub 46(E).0.36: 292
+//    Hello Mahbub 46(E).1.9: 266
+//    Hello Mahbub 46(E).1.105: 362
+//    Hello Mahbub 46(E).1.107: 364
+//    Hello Mahbub 46(E).1.112: 369
+//    Hello Mahbub 46(E).1.121: 378
+//    Hello Mahbub 46(E).1.129: 386
+//    Hello Mahbub 46(E).1.131: 388
+//    Hello Mahbub 46(E).1.133: 390
+//    Hello Mahbub 46(E).1.139: 396
+//    Hello Mahbub 46(E).3.332: 591
+//    Hello Mahbub 46(E).3.334: 593
+//    Hello Mahbub 46(E).3.336: 595
+    let raumCoordinates = [265 : CLLocationCoordinate2D(latitude: 50.5653219, longitude: 9.6852418), 268 : CLLocationCoordinate2D(latitude: 50.5651926, longitude: 9.6854397), 291 : CLLocationCoordinate2D(latitude: 50.5650060, longitude: 9.6857260)]
     
     let universityCampusArea = CLLocationCoordinate2D(latitude: 50.5650077, longitude: 9.6853589)
     let centerCoordinateGeb46E = CLLocationCoordinate2D(latitude: 50.5650899, longitude: 9.6855439)
@@ -35,10 +54,25 @@ class GoogleMapViewController: UIViewController, CLLocationManagerDelegate, Engi
         
         let mapView = GMSMapView.map(withFrame: .zero, camera: cameraPostion)
         mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = true
         
         let groundOverlay = GMSGroundOverlay(position: self.centerCoordinateGeb46E, icon: UIImage(named: "E\(self.floor!).png"), zoomLevel: CGFloat(19.7))
         groundOverlay.bearing = 30
         groundOverlay.map = mapView
+        
+//        let raumIntValue = self.geb!.utf8.reduce(0, { result, codeUnit in result + Int(codeUnit) }) + self.floor! + self.raum!
+        let raumMarker = GMSMarker(position: self.raumCoordinates[265]!)
+        raumMarker.title = "Free for next \(self.duration!)"
+        raumMarker.map = mapView
+        
+        let raumMarker2 = GMSMarker(position: self.raumCoordinates[268]!)
+        raumMarker2.title = "Free for next \(self.duration!)"
+        raumMarker2.map = mapView
+        
+        let raumMarker3 = GMSMarker(position: self.raumCoordinates[291]!)
+        raumMarker3.title = "Free for next \(self.duration!)"
+        raumMarker3.map = mapView
         
         self.view = mapView
         
