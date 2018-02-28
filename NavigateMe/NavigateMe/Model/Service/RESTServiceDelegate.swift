@@ -1,5 +1,5 @@
 //
-//  JSONDataDelegate.swift
+//  RESTServiceDelegate.swift
 //  NavigateMe
 //
 //  Created by mahbub on 1/20/18.
@@ -10,6 +10,6 @@ import Foundation
 
 protocol RESTServiceDelegate {
     
-    func dataDidReceive(data: [S2TGebPlan])
+    func dataDidReceive(data: Any)
     
 }

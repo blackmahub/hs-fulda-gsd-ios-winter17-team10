@@ -10,11 +10,20 @@ import Foundation
 
 class RESTService {
     
-    static private let networkProtocol = "http"
-    static private let host = "193.174.26.57"
-    static private let port = 8080
+    private var networkProtocol: String
+    private var host: String
+    private var port: Int?
     
-    var delegate: RESTServiceDelegate? = nil
+    var delegate: RESTServiceDelegate?
+    
+    init(with networkProtocol: String, host: String, port: Int? = nil) {
+        
+        self.networkProtocol = networkProtocol
+        self.host = host
+        self.port = port
+        
+        self.delegate = nil
+    }
     
     func callbackAfterCompletion(data: Data?, response: URLResponse?, error: Error?) {}
     
@@ -22,9 +31,14 @@ class RESTService {
         
         var components = URLComponents()
         
-        components.scheme = RESTService.networkProtocol
-        components.host = RESTService.host
-        components.port = RESTService.port
+        components.scheme = self.networkProtocol
+        components.host = self.host
+        
+        if let port = self.port {
+        
+            components.port = port
+        }
+        
         components.path = path
         
         if let query = query {

@@ -15,13 +15,14 @@ extension Date {
         case OPEN, CLOSE
     }
     
-    // Actual University open time is 08:00 and close time is 20:30 as per GMT+001
-    static private let universityOpenTime = "07:00" // as per GMT+000
-    static private let universityCloseTime = "19:30" // as per GMT+000
+    // Actual University open time is 08:00 and close time is 20:30 as per GMT+1
+    static private let universityOpenTime = "07:00" // as per GMT+0
+    static private let universityCloseTime = "19:30" // as per GMT+0
     
     static private func universityTime(of what: TimeType) -> Date {
         
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0000")
         dateFormatter.dateFormat = "HH:mm"
         
         switch what {
@@ -47,6 +48,7 @@ extension Date {
     private func equal(to date2: Date, using format: String) -> Bool {
         
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0000")
         dateFormatter.dateFormat = format
         
         let strDate1 = dateFormatter.string(from: self)
@@ -71,6 +73,7 @@ extension Date {
     func string(format: String) -> String {
         
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0000")
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
@@ -78,6 +81,7 @@ extension Date {
     func time() -> Date {
 
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0000")
         dateFormatter.dateFormat = "HH:mm"
         let strTime = dateFormatter.string(from: self)
         return dateFormatter.date(from: strTime)!
