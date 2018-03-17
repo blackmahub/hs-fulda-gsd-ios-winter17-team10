@@ -11,11 +11,11 @@ How to run in Xcode:
 
 2. If anyone wants to update these, please remove NavigateMe/Pods directory and Podfile.lock
 
-3. Then enter inside the directory NavigateMe/ using "cd" where Podfile exists. 
+3. Then please enter inside the directory NavigateMe/ using "cd" where Podfile exists. 
   
     cd NavigateMe/
     
-4. After that, run command "pod install" 
+4. After that, please run command "pod install" 
   
     If CocoaPods is not install in machine then please install it using "sudo gem install cocoapods" command.
 
